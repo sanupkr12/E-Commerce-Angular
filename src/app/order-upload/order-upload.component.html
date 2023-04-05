@@ -1,1 +1,25 @@
-<p>order-upload works!</p>
+<div class="container-fluid">
+    <div class="row pt-4 ps-3">
+        <div class="col-12 col-md-6 col-lg-4">
+            <form #previewForm="ngForm">
+                <div class="d-flex">
+                    <input type="file" name="orderFile" class="form-control me-3" ngModel>
+                    <button class="btn btn-primary">Preview</button>
+                </div>
+            </form>
+        </div>
+        <div class="offset-md-6 offset-lg-8"></div>
+        <div class="col-12 mt-2">
+            <a href="#">Download Sample</a>
+        </div>
+        <div class="col-12 mt-5 pt-5">
+            <div class="text-center pt-5">
+                <i class="fa fa-solid fa-file-pen preview-icon opacity-75"></i>
+                <p class="fs-3 opacity-50">Order preview goes here...</p>
+            </div>
+        </div>
+        <div class="col-12">
+
+        </div>
+    </div>
+</div>

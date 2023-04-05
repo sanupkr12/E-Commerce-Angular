@@ -1,0 +1,18 @@
+input.ng-valid{
+    border-left:5px solid green;
+}
+
+input.ng-invalid.ng-touched{
+    border-left:5px solid red;
+}
+
+.login-box{
+    min-height:90vh;
+    /* background-color:beige; */
+    background-image:url("../../assets/images/background-image.jpg");
+    background-color:#ece8ff;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

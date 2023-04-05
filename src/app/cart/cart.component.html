@@ -1,1 +1,63 @@
-<p>cart works!</p>
+<div class="container-fluid">
+    <p class="fs-3 fw-light mt-3">Cart</p>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-8">
+            <div class="card mb-3 border-0 shadow-sm">
+                <div class="card-body row no-gutters py-2">
+                    <div class="col-md-4 p-2 cart-item-image">
+                        <a routerLink="/product/10">
+                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="h-100 w-100 rounded" alt="...">
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body position-relative">
+                            <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"
+                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0"><i
+                                    class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-4">
+            <div class="w-75 mx-auto card border-0 shadow-sm" id="bill-details">
+                <div class="card-header">
+                    <h4 class=" mb-1">Order Summary</h4>
+                </div>
+                <div class="mb-1 py-3 card-body" id="address-box">
+                    <p class="mb-0"><strong>Address: </strong></p>
+                    <address class="mb-1">1,2,3, Ashoka Indl Est, Village Valiv, nr Golani Complex, Vasai(e),
+                        Mumbai, Maharashtra, 401506.</address>
+                    <p class="mb-0">+91 9525024556</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col">
+                            <p>Total MRP:</p>
+                        </div>
+                        <div class="col text-end">
+                            <p class="mb-1 fw-bold">₹<span id="total-bill"></span></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>Delivery:</p>
+                        </div>
+                        <div class="col text-end">
+                            <p class="mb-1 fw-bold">₹100</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="fs-5">Total:</p>
+                        </div>
+                        <div class="col text-end">
+                            <p class="mb-1 fs-5 fw-bold">₹<span id="total-cost"></span></p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="checkout-btn">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

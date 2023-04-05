@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="container-fluid">
+    <div class="row login-box my-auto">
+        <div class="col-12 col-md-6 my-auto"> 
+            <div class="p-3 w-75 mx-auto bg-white shadow rounded">
+                <form #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm.value)" class="py-5 w-100 p-3">
+                    <legend class="fw-light">Login</legend>
+                    <div class="form-floating mb-3 mt-3">
+                        <input ngModel #email="ngModel" type="email" name="email" class="form-control mb-3 shadow-none" placeholder="Enter Email"
+                             required>
+                        <label for="email">Email</label>
+                        <div class="invalid-feedback">Please enter valid email</div>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input ngModel #password="ngModel" type="password" name="password" class="form-control mb-3 shadow-none"
+                            placeholder="Enter Password" required minlength="4">
+                        <label for="password">Password</label>
+                        <div class="invalid-feedback">Please enter valid password</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div class="text-center">
+                    <p id="error-box" class="text-danger"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
