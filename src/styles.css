@@ -20,3 +20,18 @@ html{
 .quantity-input:focus{
     border:none;
 }
+
+.product-description{
+    min-height: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bg-main{
+    background-color:beige;
+}
+
+.hover-pointer{
+    cursor: pointer;
+}

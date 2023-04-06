@@ -1,41 +1,32 @@
 <div class="container-fluid">
     <div class="row mb-5">
         <div class="col-12 col-md-6 col-lg-7">
-            <div class="pt-3 text-center">
-                <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="img-fluid">
+            <div class="pt-5 ps-5">
+                <img src={{display_image}} class="img-fluid display-image w-75 ms-5">
             </div>
-            <div class="row no-gutters w-75 mx-auto">
-                <div class="col-3">
-                    <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="img-fluid">
-                </div>
-                <div class="col-3">
-                    <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="img-fluid">
-                </div>
-                <div class="col-3">
-                    <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="img-fluid">
-                </div>
-                <div class="col-3">
-                    <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="img-fluid">
+            <div class="row no-gutters w-75 ps-5 mt-3 ms-5">
+                <div class="col-3" *ngFor="let image of product.images;index as i">
+                    <img src={{image}} class="img-fluid preview-image hover-pointer" *ngIf="i<4" (click)="changeDisplayImage($event)" [ngClass]="{'preview-border shadow' : image===display_image}">
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-5">
             <div class="pt-5">
-                <p class="fs-3 mb-1 fw-bold">{{title}}</p>
-                <p class="fs-5 text-muted mb-1">{{brand}}</p>
-                <p class="fs-4 fw-light ">{{price | currency:'INR'}}</p>
+                <p class="fs-3 mb-1 fw-bold">{{product.title | titlecase}}</p>
+                <p class="fs-5 text-muted mb-1">{{product.brand}}</p>
+                <p class="fs-4 fw-light ">{{product.price | currency:'INR'}}</p>
                 <div class="d-flex">
                     <form>
                         <div class="input-group w-auto">
                             <button class="btn btn-warning">-</button>
-                            <input type="text" class="quantity-input border-0 border-top border-bottom text-center">
+                            <input type="text" class="quantity-input border-0 border-top border-bottom text-center" value="10">
                             <button class="btn btn-warning">+</button>
                         </div>
                     </form>
-                    <button class="btn btn-dark ms-3">GO TO CART</button>
+                    <a routerLink="/cart" class="btn btn-dark ms-3">GO TO CART</a>
                 </div>
                 <button class="btn btn-dark d-none">ADD TO CART</button>
-                <p class="fs-6 text-muted mt-3 py-3 border-top">{{description}}</p>
+                <p class="fs-6 text-muted mt-3 py-3 border-top">{{product.description}}</p>
                 <p class="py-1"><strong>Available offers</strong></p>
                 <p>Bank Offer5% Cashback on Flipkart Axis Bank CardT&C</p>
                 <p>Special PriceGet extra 10% off (price inclusive of cashback/coupon)T&C</p>

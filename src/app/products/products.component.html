@@ -1,200 +1,44 @@
-<div class="container-fluid">
+<div class="container-fluid bg-light">
     <div class="row pt-3 mb-5">
-        <div class="col-12 col-md-2 col-lg-2 border-end">
-            <p class="fs-5">Filters:</p>
-            <select name="brand" class="form-select shadow-none mb-3">
-                <option value="phtl">Price : high to low</option>
-                <option value="plth">Price : low to high</option>
-                <option value="rhtl">Rating : high to low</option>
-            </select>
-            <select name="price" class="form-select shadow-none mb-3">
-                <option value="phtl">Price : high to low</option>
-                <option value="plth">Price : low to high</option>
-                <option value="rhtl">Rating : high to low</option>
-            </select>
-            <select name="rating" class="form-select shadow-none mb-3">
-                <option value="phtl">Price : high to low</option>
-                <option value="plth">Price : low to high</option>
-                <option value="rhtl">Rating : high to low</option>
-            </select>
-        </div>
-        <div class="col-12 col-md-10 col-lg-10">
-            <div class="d-flex align-items-center justify-content-end me-3 mb-3">
-                <span class="fs-6 me-2">Sort By:</span>
-                <div>
-                    <select name="sort" class="form-select shadow-none">
-                        <option value="phtl">Price : high to low</option>
-                        <option value="plth">Price : low to high</option>
-                        <option value="rhtl">Rating : high to low</option>
-                    </select>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-sm -3 col-md-3">
+                    <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filters <i class="fa fa-solid fa-filter"></i></button>
+                </div>
+                <div class="col-12  col-sm-6 offset-sm-6 col-md-6 offset-md-3">
+                    <div class="d-flex align-items-center justify-content-end me-3 mb-3">
+                        <span class="fs-6 me-2">Sort By:</span>
+                        <div>
+                            <select name="sort" class="form-select shadow-none">
+                                <option value="phtl">Price : high to low</option>
+                                <option value="plth">Price : low to high</option>
+                                <option value="rhtl">Rating : high to low</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div class="row pt-3 no-gutters">
-                <div class="col-12 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of products">
                     <div class="card mb-3 shadow-sm">
-                        <a routerLink="/product/10">
-                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2 img-fluid" alt="...">
+                        <a routerLink='/product/{{item.sku_id}}' class="position-relative">
+                            <img src={{item.thumbnail}}
+                            class="card-img-top p-2 img-fluid thumbnail-image" alt="...">
+                            <span class="position-absolute start-0 bottom-0 bg-secondary rounded-end text-white p-1">{{item.rating}}<i class="fa fa-solid fa-star ps-1 text-warning"></i></span>
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
+                            <h5 class="card-title fs-4 fw-light mb-0 text-muted">{{item.title}}</h5>
+                            <p class="text-muted mb-1">{{item.brand}}</p>
+                            <p class="card-subtitle mb-2">{{item.price | currency:'INR'}}</p>
+                            <p class="card-text product-description">{{item.description}}</p>
                             <div class="d-flex justify-content-between d-none">
                                 <div class="input-group w-auto">
                                     <button class="btn btn-sm btn-warning">-</button>
                                     <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em">
                                     <button class="btn btn-sm btn-warning">+</button>
                                 </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3 shadow-sm">
-                        <a routerLink="/product/10">
-                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2 img-fluid" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <form>
-                                    <div class="input-group w-auto">
-                                        <button class="btn btn-sm btn-warning">-</button>
-                                        <input type="text" class="form-control form-control-sm border-0 border-top border-bottom quantity-input">
-                                        <button class="btn btn-sm btn-warning">+</button>
-                                    </div>
-                                </form>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3 shadow-sm">
-                        <a routerLink="/product/10">
-                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2 img-fluid" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
-                                </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3 shadow-sm">
-                        <a routerLink="/product/10">
-                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2 img-fluid" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
-                                </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
-                                </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
-                                </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
-                                </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
-                            </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg"
-                            class="card-img-top p-2" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-1 text-muted">{{title}}</h5>
-                            <p class="card-subtitle mb-2">{{price | currency:'INR'}}</p>
-                            <p class="card-text">{{description | slice:0:60}}...</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
-                                </div>
-                                <button class="btn btn-sm btn-dark">GO TO CART</button>
+                                <a class="btn btn-sm btn-dark" routerLink="/cart">GO TO CART</a>
                             </div>
                             <button class="btn btn-sm btn-dark">ADD TO CART</button>
                         </div>
@@ -204,3 +48,58 @@
         </div>
     </div>
 </div>
+
+<div class="offcanvas offcanvas-start" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="min-price">
+            </div>
+            <div class="col-2">
+                <p class="text-center">to</p>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="max-price">
+            </div>
+            <div class="col-12 mt-3">
+                <form>
+                    <legend>Rating:</legend>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating">
+                        <label class="form-check-label">1 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating">
+                        <label class="form-check-label">2 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating">
+                        <label class="form-check-label">3 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating">
+                        <label class="form-check-label">4 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12">
+                <legend>Brand:</legend>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="brand">
+                    <label class="form-check-label">Apple</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="brand">
+                    <label class="form-check-label">Apple</label>
+                </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

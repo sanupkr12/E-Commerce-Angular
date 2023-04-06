@@ -1,0 +1,11 @@
+.preview-image{
+    height:6rem;
+}
+
+.display-image{
+    height:30rem;
+}
+
+.preview-border{
+    border: 3px solid rgb(207, 202, 202);
+}

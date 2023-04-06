@@ -1,9 +1,15 @@
 <div class="container-fluid">
     <div class="row login-box my-auto">
-        <div class="col-12 col-md-6 my-auto"> 
+        <div class="col-12 col-md-6 my-auto pb-5"> 
+            <div class="w-75 mx-auto">
+                <h3 class="text-center">Welcome to Increff</h3>
+                <p class="text-center text-muted">Enabling global retail and e-commerce brands to consistently achieve inventory accuracy and supply chain efficiency through best-in-class merchandise planning, allocation, and warehousing solutions.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 my-auto border-start">
             <div class="p-3 w-75 mx-auto bg-white shadow rounded">
                 <form #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm.value)" class="py-5 w-100 p-3">
-                    <legend class="fw-light">Login</legend>
+                    <legend>Login</legend>
                     <div class="form-floating mb-3 mt-3">
                         <input ngModel #email="ngModel" type="email" name="email" class="form-control mb-3 shadow-none" placeholder="Enter Email"
                              required>

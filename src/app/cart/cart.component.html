@@ -1,26 +1,88 @@
-<div class="container-fluid">
-    <p class="fs-3 fw-light mt-3">Cart</p>
+<div class="container-fluid bg-main mb-5">
+    <p class="fs-3 pt-3">Cart</p>
     <div class="row">
         <div class="col-12 col-md-12 col-lg-8">
             <div class="card mb-3 border-0 shadow-sm">
                 <div class="card-body row no-gutters py-2">
-                    <div class="col-md-4 p-2 cart-item-image">
-                        <a routerLink="/product/10">
+                    <div class="col-md-4 p-0 cart-item-image">
+                        <a routerLink="/product/ap123">
                             <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="h-100 w-100 rounded" alt="...">
                         </a>
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body position-relative">
+                        <div class="card-body position-relative p-0">
                             <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"
                                 class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0"><i
                                     class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
+                            <p class="fs-3 mb-0 fw-bold">{{title | titlecase}}</p>
+                            <p class="fs-5 text-muted mb-0">{{brand}}</p>
+                            <p class="fs-5 fw-light mb-1">{{price | currency:'INR'}}</p>
+                            <p class="product-description">{{description}}</p>
+                            <div class="input-group w-auto">
+                                <button class="btn btn-warning">-</button>
+                                <input type="text" class="quantity-input border-0 border-top border-bottom text-center" value="10">
+                                <button class="btn btn-warning">+</button>
+                            </div>
+                            <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{600000 | currency:'INR'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3 border-0 shadow-sm">
+                <div class="card-body row no-gutters py-2">
+                    <div class="col-md-4 p-0 cart-item-image">
+                        <a routerLink="/product/ap123">
+                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="h-100 w-100 rounded" alt="...">
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body position-relative p-0">
+                            <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"
+                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0"><i
+                                    class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
+                            <p class="fs-3 mb-0 fw-bold">{{title | titlecase}}</p>
+                            <p class="fs-5 text-muted mb-0">{{brand}}</p>
+                            <p class="fs-5 fw-light mb-1">{{price | currency:'INR'}}</p>
+                            <p class="product-description">{{description}}</p>
+                            <div class="input-group w-auto">
+                                <button class="btn btn-warning">-</button>
+                                <input type="text" class="quantity-input border-0 border-top border-bottom text-center" value="10">
+                                <button class="btn btn-warning">+</button>
+                            </div>
+                            <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{600000 | currency:'INR'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3 border-0 shadow-sm">
+                <div class="card-body row no-gutters py-2">
+                    <div class="col-md-4 p-0 cart-item-image">
+                        <a routerLink="/product/ap123">
+                            <img src="https://i.gadgets360cdn.com/products/large/1536782676_635_iphone_xs_max.jpg" class="h-100 w-100 rounded" alt="...">
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body position-relative p-0">
+                            <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"
+                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0"><i
+                                    class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
+                            <p class="fs-4 mb-0 fw-bold">{{title | titlecase}}</p>
+                            <p class="fs-5 text-muted mb-0">{{brand}}</p>
+                            <p class="fs-5 fw-light mb-1">{{price | currency:'INR'}}</p>
+                            <p class="product-description">{{description}}</p>
+                            <div class="input-group w-auto">
+                                <button class="btn btn-warning">-</button>
+                                <input type="text" class="quantity-input border-0 border-top border-bottom text-center" value="10">
+                                <button class="btn btn-warning">+</button>
+                            </div>
+                            <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{600000 | currency:'INR'}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-4">
-            <div class="w-75 mx-auto card border-0 shadow-sm" id="bill-details">
+            <div class="card border-0 shadow-sm" id="bill-details">
                 <div class="card-header">
                     <h4 class=" mb-1">Order Summary</h4>
                 </div>
@@ -36,7 +98,7 @@
                             <p>Total MRP:</p>
                         </div>
                         <div class="col text-end">
-                            <p class="mb-1 fw-bold">₹<span id="total-bill"></span></p>
+                            <p class="mb-1 fw-bold"><span id="total-bill"></span></p>
                         </div>
                     </div>
                     <div class="row">
@@ -44,7 +106,7 @@
                             <p>Delivery:</p>
                         </div>
                         <div class="col text-end">
-                            <p class="mb-1 fw-bold">₹100</p>
+                            <p class="mb-1 fw-bold">{{100 | currency:'INR'}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -52,7 +114,7 @@
                             <p class="fs-5">Total:</p>
                         </div>
                         <div class="col text-end">
-                            <p class="mb-1 fs-5 fw-bold">₹<span id="total-cost"></span></p>
+                            <p class="mb-1 fs-5 fw-bold"><span id="total-cost"></span></p>
                         </div>
                     </div>
                     <button class="btn btn-primary" id="checkout-btn">Checkout</button>

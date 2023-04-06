@@ -1,3 +1,11 @@
 .input-box{
     min-width:10rem;
 }
+
+.cart-item-count{
+    width:2em;
+}
+
+.display-none{
+    display: none;
+}
