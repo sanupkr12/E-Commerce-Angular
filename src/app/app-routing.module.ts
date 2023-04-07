@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { OrderUploadComponent } from './order-upload/order-upload.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductsComponent } from './products/products.component';
-
+import { LoginGuardService } from './login-guard.service';
 const routes: Routes = [
   {
     path:'',
@@ -29,7 +29,8 @@ const routes: Routes = [
   },
   {
     path:'login',
-    component:LoginComponent
+    component:LoginComponent,
+    canActivate:[LoginGuardService]
   }
 ];
 

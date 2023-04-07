@@ -12,6 +12,11 @@ import { CartComponent } from './cart/cart.component';
 import { OrderUploadComponent } from './order-upload/order-upload.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule} from "@angular/common/http"
+import { AuthService } from './auth.service';
+import { LoginGuardService } from './login-guard.service';
+import { UserService } from './user.service';
+import { ProductService } from './product.service';
+import { CartService } from './cart.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,7 @@ import { HttpClientModule} from "@angular/common/http"
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService,LoginGuardService,UserService,ProductService,CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

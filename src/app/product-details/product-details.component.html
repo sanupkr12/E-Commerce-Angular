@@ -2,16 +2,16 @@
     <div class="row mb-5">
         <div class="col-12 col-md-6 col-lg-7">
             <div class="pt-5 ps-5">
-                <img src={{display_image}} class="img-fluid display-image w-75 ms-5">
+                <img src={{display_image}} class="img-fluid display-image w-80">
             </div>
-            <div class="row no-gutters w-75 ps-5 mt-3 ms-5">
+            <div class="row no-gutters w-85 ps-3 mt-3 ms-3">
                 <div class="col-3" *ngFor="let image of product.images;index as i">
                     <img src={{image}} class="img-fluid preview-image hover-pointer" *ngIf="i<4" (click)="changeDisplayImage($event)" [ngClass]="{'preview-border shadow' : image===display_image}">
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-5">
-            <div class="pt-5">
+            <div class="pt-5 ps-5  ps-sm-5 ps-md-0">
                 <p class="fs-3 mb-1 fw-bold">{{product.title | titlecase}}</p>
                 <p class="fs-5 text-muted mb-1">{{product.brand}}</p>
                 <p class="fs-4 fw-light ">{{product.price | currency:'INR'}}</p>
