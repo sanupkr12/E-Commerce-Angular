@@ -13,6 +13,12 @@ export class AuthService {
   constructor(private userService:UserService){
 
   }
+
+  ngOnInit(){
+    this.userService.getUsersList().subscribe((users:any)=>{
+      this.userList = users;
+    });
+  }
   
   setUser(user:string){
     this.user.next(user);

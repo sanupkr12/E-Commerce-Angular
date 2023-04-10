@@ -13,7 +13,6 @@ import { OrderUploadComponent } from './order-upload/order-upload.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule} from "@angular/common/http"
 import { AuthService } from './auth.service';
-import { LoginGuardService } from './login-guard.service';
 import { UserService } from './user.service';
 import { ProductService } from './product.service';
 import { CartService } from './cart.service';
@@ -35,7 +34,7 @@ import { CartService } from './cart.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService,LoginGuardService,UserService,ProductService,CartService],
+  providers: [AuthService,UserService,ProductService,CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -18,14 +18,14 @@
                 <div class="d-flex">
                     <form>
                         <div class="input-group w-auto">
-                            <button class="btn btn-warning">-</button>
-                            <input type="text" class="quantity-input border-0 border-top border-bottom text-center" value="10">
-                            <button class="btn btn-warning">+</button>
+                            <button class="btn btn-warning" (click)="decreaseQuantity(sku_id)">-</button>
+                            <input type="text" class="quantity-input border-0 border-top border-bottom text-center" (keyup)="updateQuantity(sku_id,$event)">
+                            <button class="btn btn-warning" (click)="increaseQuantity(sku_id)">+</button>
                         </div>
                     </form>
                     <a routerLink="/cart" class="btn btn-dark ms-3">GO TO CART</a>
                 </div>
-                <button class="btn btn-dark d-none">ADD TO CART</button>
+                <button class="btn btn-dark d-none" (click)="addProduct(sku_id)">ADD TO CART</button>
                 <p class="fs-6 text-muted mt-3 py-3 border-top">{{product.description}}</p>
                 <p class="py-1"><strong>Available offers</strong></p>
                 <p>Bank Offer5% Cashback on Flipkart Axis Bank CardT&C</p>

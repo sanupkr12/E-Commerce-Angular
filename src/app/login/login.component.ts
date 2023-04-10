@@ -13,12 +13,20 @@ export class LoginComponent {
   userlist:UserInterface[] = [];
   errorMessage:string = '';
   constructor(private router:Router,private userService:UserService,private authService:AuthService){
+    
   }
 
   ngOnInit(){
     this.userService.getUsersList().subscribe((users:any)=>{
-        this.userlist = users.credentials;
+      this.userlist = users.credentials;
+      let email = localStorage.getItem('email');
+      for(let i=0;i<this.userlist.length;i++){
+        if(this.userlist[i].email === email){
+          this.router.navigate(['/products']);
+        }
+      }
     })
+    
   }
 
   handleLogin(formData:userForm){

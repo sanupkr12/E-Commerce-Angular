@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import { UserInterface } from './Interface/userInterface';
+import {product as ProductInterface} from './Interface/productInterface';
 import { UserService } from './user.service';
 import { AuthService } from './auth.service';
+import { CartService } from './cart.service';
+import { ProductService } from './product.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,26 +13,15 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent {
   userList:UserInterface[] = [];
-  constructor(private userService:UserService,private authService:AuthService){
-
+  productList:ProductInterface[] = [];
+  constructor(private userService:UserService,private authService:AuthService,private cartService:CartService,private productService:ProductService){
+    
   }
 
   ngOnInit() {
-    let email = localStorage.getItem('user');
-    this.userService.getUsersList().subscribe((data:any) =>{
-      this.userList = data.credentials;
-      if(!email){
-        this.authService.setUser("");
-      }
-      else{
-        for(let i=0;i<this.userList.length;i++){
-          let user = this.userList[i];
-          if(user.email === email){
-            this.authService.setUser(user.username);
-            break;
-          }
-        }
-      }
-    });
+    this.cartService.initializeCart();
+    this.cartService.validateCart();
   };
+
+  
 }

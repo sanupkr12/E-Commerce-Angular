@@ -11,11 +11,27 @@ import { UserService } from '../user.service';
 })
 export class HeaderComponent {
   username:string = "";
-
-  constructor(private authService:AuthService){
+  userlist:UserInterface[] = [];
+  constructor(private authService:AuthService,private userService:UserService){
   }
 
   ngOnInit(){
+    let email = localStorage.getItem('email');
+    if(!email){
+      this.username = "";
+    }
+    else{
+      this.userService.getUsersList().subscribe((users:any)=>{
+        this.userlist = users.credentials;
+        for(let i=0;i<this.userlist.length;i++){
+          if(this.userlist[i].email === email){
+            this.username = this.userlist[i].username;
+            break;
+          }
+        }
+      })
+    }
+
     this.authService.getUser().subscribe((user)=>{
       this.username = user;
     })

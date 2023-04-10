@@ -34,13 +34,13 @@
                             <p class="card-text product-description">{{item.description}}</p>
                             <div class="d-flex justify-content-between d-none">
                                 <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em">
-                                    <button class="btn btn-sm btn-warning">+</button>
+                                    <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(item.sku_id)">-</button>
+                                    <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em" (keyup)="updateQuantity(item.sku_id,$event)">
+                                    <button class="btn btn-sm btn-warning" (click)="increaseQuantity(item.sku_id)">+</button>
                                 </div>
                                 <a class="btn btn-sm btn-dark" routerLink="/cart">GO TO CART</a>
                             </div>
-                            <button class="btn btn-sm btn-dark">ADD TO CART</button>
+                            <button class="btn btn-sm btn-dark" (click)="addProduct(item.sku_id)">ADD TO CART</button>
                         </div>
                     </div>
                 </div>

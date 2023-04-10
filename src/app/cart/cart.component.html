@@ -19,9 +19,9 @@
                             <p class="fs-5 fw-light mb-1">{{price | currency:'INR'}}</p>
                             <p class="product-description">{{description}}</p>
                             <div class="input-group w-auto">
-                                <button class="btn btn-warning">-</button>
-                                <input type="text" class="quantity-input border-0 border-top border-bottom text-center" value="10">
-                                <button class="btn btn-warning">+</button>
+                                <button class="btn btn-warning" (click)="decreaseQuantity('ap123')">-</button>
+                                <input type="text" class="quantity-input border-0 border-top border-bottom text-center" (keyup)="updateQuantity('ap123',$event)">
+                                <button class="btn btn-warning" (click)="increaseQuantity('ap123')">+</button>
                             </div>
                             <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{600000 | currency:'INR'}}</p>
                         </div>

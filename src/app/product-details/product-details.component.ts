@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../cart.service';
 import { product as Product } from '../Interface/productInterface';
 import { ProductService } from '../product.service';
 @Component({
@@ -12,7 +13,7 @@ export class ProductDetailsComponent {
   product:Product = {} as Product;
   display_image:string="";
 
-  constructor(private router:ActivatedRoute,private productService:ProductService){
+  constructor(private router:ActivatedRoute,private productService:ProductService,private cartService:CartService){
 
   }
 
@@ -29,21 +30,28 @@ export class ProductDetailsComponent {
           }
         });
     });
+
+    this.cartService.initializeCart();
+    this.cartService.validateCart();
   }
 
   changeDisplayImage(event:any){
     this.display_image = event.target.src;
   }
   
-  addProduct(sku_id:string,quantity:number){
-    
+  addProduct(sku_id:string){
+    this.cartService.addToCart(sku_id);
   }
 
-  increaseQuantity(sku_id:string,quantity:number){
-
+  increaseQuantity(sku_id:string){
+    this.cartService.increaseQuantity(sku_id);
   }
 
-  decreaseQuantity(sku_id:string,quantity:number){
+  decreaseQuantity(sku_id:string){
+    this.cartService.decreaseQuantity(sku_id);
+  }
 
+  updateQuantity(sku_id:string,event:any){
+    this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
   }
 }
