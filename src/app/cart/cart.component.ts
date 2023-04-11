@@ -1,25 +1,27 @@
 import { Component } from '@angular/core';
 import { CartService } from '../cart.service';
+import { ProductService } from '../product.service';
+import { product as ProductInterface } from '../Interface/productInterface';
+import { cartInterface as CartInterface } from '../Interface/cartInterface';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
-  brand:string = "Apple";
-  title:string = "Iphone";
-  price:number = 60000;
-  description:string = "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis ullam eos debitis, rerum dolor fugit dolorem quia adipisci? Minus veritatis id odio vel pariatur ad optio assumenda quia, accusantium dolores.";
-
-  constructor(private cartService:CartService){
-
+  cartItems:CartInterface[]=[];
+  constructor(private cartService:CartService,private productService:ProductService){
   }
 
   ngOnInit(){
     this.cartService.initializeCart();
     this.cartService.validateCart();
+    this.cartItems = this.cartService.cartList;
+    this.cartService.getCart().subscribe((res)=>{
+      this.cartItems = res;
+    })
   }
-  
+
   increaseQuantity(sku_id:string){
     this.cartService.increaseQuantity(sku_id);
   }

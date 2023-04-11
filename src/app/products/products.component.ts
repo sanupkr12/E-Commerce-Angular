@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from '../product.service';
 import { product } from '../Interface/productInterface';
 import { CartService } from '../cart.service';
+import { cartInterface } from '../Interface/cartInterface';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -9,6 +10,7 @@ import { CartService } from '../cart.service';
 })
 export class ProductsComponent {
   products:product[] = [];
+  cartItems:cartInterface[] = [];
   constructor(private productService: ProductService,private cartService:CartService){
 
   }
@@ -19,6 +21,10 @@ export class ProductsComponent {
       })
       this.cartService.initializeCart();
       this.cartService.validateCart();
+      this.cartItems = this.cartService.cartList;
+      this.cartService.getCart().subscribe((res)=>{
+        this.cartItems = [...res];
+      });
   }
 
   addProduct(sku_id:string){

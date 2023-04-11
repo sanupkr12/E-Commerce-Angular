@@ -1,0 +1,22 @@
+<div class="card mb-3 shadow-sm">
+    <a routerLink='/product/{{product.sku_id}}' class="position-relative">
+        <img src={{product.thumbnail}}
+        class="card-img-top p-2 img-fluid thumbnail-image" alt="...">
+        <span class="position-absolute start-0 bottom-0 bg-secondary rounded-end text-white p-1">{{product.rating}}<i class="fa fa-solid fa-star ps-1 text-warning"></i></span>
+    </a>
+    <div class="card-body">
+        <h5 class="card-title fs-4 fw-light mb-0 text-muted">{{product.title}}</h5>
+        <p class="text-muted mb-1">{{product.brand}}</p>
+        <p class="card-subtitle mb-2">{{product.price | currency:'INR'}}</p>
+        <p class="card-text product-description">{{product.description}}</p>
+        <div class="d-flex justify-content-between" [ngClass]="{'d-none':quantity<=0}">
+            <div class="input-group w-auto">
+                <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(product.sku_id)">-</button>
+                <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em" (keyup)="updateQuantity(product.sku_id,$event)" value="{{quantity}}">
+                <button class="btn btn-sm btn-warning" (click)="increaseQuantity(product.sku_id)">+</button>
+            </div>
+            <a class="btn btn-sm btn-dark" routerLink="/cart" >GO TO CART</a>
+        </div>
+        <button class="btn btn-sm btn-dark" (click)="addProduct(product.sku_id)" [ngClass]="{'d-none':quantity>0}">ADD TO CART</button>
+    </div>
+</div>

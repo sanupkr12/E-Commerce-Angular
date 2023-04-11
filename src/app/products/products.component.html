@@ -21,28 +21,7 @@
             
             <div class="row pt-3 no-gutters">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of products">
-                    <div class="card mb-3 shadow-sm">
-                        <a routerLink='/product/{{item.sku_id}}' class="position-relative">
-                            <img src={{item.thumbnail}}
-                            class="card-img-top p-2 img-fluid thumbnail-image" alt="...">
-                            <span class="position-absolute start-0 bottom-0 bg-secondary rounded-end text-white p-1">{{item.rating}}<i class="fa fa-solid fa-star ps-1 text-warning"></i></span>
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title fs-4 fw-light mb-0 text-muted">{{item.title}}</h5>
-                            <p class="text-muted mb-1">{{item.brand}}</p>
-                            <p class="card-subtitle mb-2">{{item.price | currency:'INR'}}</p>
-                            <p class="card-text product-description">{{item.description}}</p>
-                            <div class="d-flex justify-content-between d-none">
-                                <div class="input-group w-auto">
-                                    <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(item.sku_id)">-</button>
-                                    <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em" (keyup)="updateQuantity(item.sku_id,$event)">
-                                    <button class="btn btn-sm btn-warning" (click)="increaseQuantity(item.sku_id)">+</button>
-                                </div>
-                                <a class="btn btn-sm btn-dark" routerLink="/cart">GO TO CART</a>
-                            </div>
-                            <button class="btn btn-sm btn-dark" (click)="addProduct(item.sku_id)">ADD TO CART</button>
-                        </div>
-                    </div>
+                    <app-product-card [product]="item" [cart]="cartItems" ></app-product-card>
                 </div>
             </div>
         </div>

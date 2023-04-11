@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthService } from '../auth.service';
+import { cartInterface } from '../Interface/cartInterface';
 import { UserInterface } from '../Interface/userInterface';
 import { UserService } from '../user.service';
+import { CartService } from '../cart.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,7 +14,9 @@ import { UserService } from '../user.service';
 export class HeaderComponent {
   username:string = "";
   userlist:UserInterface[] = [];
-  constructor(private authService:AuthService,private userService:UserService){
+  cartItems:cartInterface[] = [];
+  totalItems:number = 0;
+  constructor(private authService:AuthService,private userService:UserService,private cartService:CartService){
   }
 
   ngOnInit(){
@@ -31,10 +35,35 @@ export class HeaderComponent {
         }
       })
     }
-
     this.authService.getUser().subscribe((user)=>{
       this.username = user;
     })
+    this.cartItems = [...this.cartService.cartList];
+    this.cartService.getCart().subscribe((res)=>{
+      this.cartItems = [...res];
+      this.updateItemCount();
+    });
+    
+  }
+
+  updateItemCount(){
+    let itemCount = 0;
+    let email = localStorage.getItem('email');
+    let cart = JSON.parse(localStorage.getItem('cart') || '');
+    if(!email){
+      for(const key in cart['untracked']){
+        itemCount+= cart['untracked'][key];
+      }
+    }
+    else{
+      for(const key in cart[email]){
+        itemCount+= cart[email][key];
+      }
+    }
+    this.totalItems = itemCount;
+  }
+  ngOnChanges(changes: SimpleChanges){
+    this.updateItemCount();
   }
 
 }
