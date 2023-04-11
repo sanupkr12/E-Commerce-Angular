@@ -10,6 +10,7 @@ import { cartInterface as CartInterface } from '../Interface/cartInterface';
 })
 export class CartComponent {
   cartItems:CartInterface[]=[];
+  totalMrp:number = 0;
   constructor(private cartService:CartService,private productService:ProductService){
   }
 
@@ -19,6 +20,10 @@ export class CartComponent {
     this.cartItems = this.cartService.cartList;
     this.cartService.getCart().subscribe((res)=>{
       this.cartItems = res;
+      this.totalMrp = 0;
+      for(let i=0;i<this.cartItems.length;i++){
+        this.totalMrp+=this.cartItems[i].product.price * this.cartItems[i].quantity;
+      }
     })
   }
 

@@ -189,7 +189,6 @@ export class CartService {
       }
       else{
         let cartObj = JSON.parse(cart);
-        console.log(cartObj[email]);
         cartObj[email] = {...cartObj[email],...cartObj['untracked']};
         cartObj['untracked'] = {};
         localStorage.setItem('cart',JSON.stringify(cartObj));

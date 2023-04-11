@@ -49,18 +49,50 @@ export class ProductDetailsComponent {
   }
   
   addProduct(sku_id:string){
+    this.quantity = 1;
     this.cartService.addToCart(sku_id);
+    for(let i=0;i<this.cart.length;i++){
+      if(this.cart[i].product.sku_id===sku_id){
+        this.cart[i].quantity = this.quantity;
+        this.cartService.setCart(this.cart);
+        break;
+      }
+    }
   }
 
   increaseQuantity(sku_id:string){
+    this.quantity+=1;
     this.cartService.increaseQuantity(sku_id);
+    for(let i=0;i<this.cart.length;i++){
+      if(this.cart[i].product.sku_id===sku_id){
+        this.cart[i].quantity = this.quantity;
+        this.cartService.setCart(this.cart);
+        break;
+      }
+    }
   }
 
   decreaseQuantity(sku_id:string){
+    this.quantity-=1;
     this.cartService.decreaseQuantity(sku_id);
+    for(let i=0;i<this.cart.length;i++){
+      if(this.cart[i].product.sku_id===sku_id){
+        this.cart[i].quantity = this.quantity;
+        this.cartService.setCart(this.cart);
+        break;
+      }
+    }
   }
 
   updateQuantity(sku_id:string,event:any){
+    this.quantity = parseInt(event.target.value);
     this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
+    for(let i=0;i<this.cart.length;i++){
+      if(this.cart[i].product.sku_id===sku_id){
+        this.cart[i].quantity = this.quantity;
+        this.cartService.setCart(this.cart);
+        break;
+      }
+    }
   }
 }

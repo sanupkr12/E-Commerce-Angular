@@ -43,4 +43,30 @@ export class ProductsComponent {
     this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
   }
 
+  handleSort(event:any){
+    switch(event.target.value){
+      case "plth":
+        this.products = this.products.sort(this.sortplth);
+        break;
+      case "phtl":
+        this.products = this.products.sort(this.sortphtl);
+        break;
+      case "rhtl":
+        this.products = this.products.sort(this.sortrhtl);
+        break;
+      default:
+    }
+  }
+
+  sortphtl(a:product,b:product){
+    return a.price < b.price ? 1 : -1;
+  }
+
+  sortplth(a:product,b:product){
+    return a.price > b.price ? 1 : -1;
+  }
+
+  sortrhtl(a:product,b:product){
+    return a.rating > b.rating ? 1 : -1;
+  }
 }

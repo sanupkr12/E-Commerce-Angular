@@ -20,10 +20,10 @@
                             <p class="fs-5 fw-light mb-1">{{item.product.price | currency:'INR'}}</p>
                             <p class="product-description">{{item.product.description}}</p>
                             <div class="input-group w-auto">
-                                <button class="btn btn-warning" (click)="decreaseQuantity('{{item.product.sku_id}}')">-</button>
+                                <button class="btn btn-warning" (click)="decreaseQuantity(item.product.sku_id)">-</button>
                                 <input type="text" class="quantity-input border-0 border-top border-bottom text-center"
                                     (keyup)="updateQuantity('{{item.product.sku_id}}',$event)" value="{{item.quantity}}">
-                                <button class="btn btn-warning" (click)="increaseQuantity('{{item.product.sku_id}}')">+</button>
+                                <button class="btn btn-warning" (click)='increaseQuantity(item.product.sku_id)'>+</button>
                             </div>
                             <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{item.product.price * item.quantity | currency:'INR'}}</p>
                         </div>
@@ -48,7 +48,7 @@
                             <p>Total MRP:</p>
                         </div>
                         <div class="col text-end">
-                            <p class="mb-1 fw-bold"><span id="total-bill"></span></p>
+                            <p class="mb-1 fw-bold">{{totalMrp | currency:'INR'}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -64,7 +64,7 @@
                             <p class="fs-5">Total:</p>
                         </div>
                         <div class="col text-end">
-                            <p class="mb-1 fs-5 fw-bold"><span id="total-cost"></span></p>
+                            <p class="mb-1 fs-5 fw-bold">{{totalMrp + 100 | currency:'INR'}}</p>
                         </div>
                     </div>
                     <button class="btn btn-primary" id="checkout-btn">Checkout</button>

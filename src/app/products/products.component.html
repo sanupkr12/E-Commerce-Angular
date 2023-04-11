@@ -9,7 +9,7 @@
                     <div class="d-flex align-items-center justify-content-end me-3 mb-3">
                         <span class="fs-6 me-2">Sort By:</span>
                         <div>
-                            <select name="sort" class="form-select shadow-none">
+                            <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
                                 <option value="phtl">Price : high to low</option>
                                 <option value="plth">Price : low to high</option>
                                 <option value="rhtl">Rating : high to low</option>
