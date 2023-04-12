@@ -14,6 +14,7 @@ export class CartService {
   productList:ProductInterface[] = [];
   cartList:CartInterface[] = [];
   cartItems = new Subject<CartInterface[]>;
+  cartLoaded = new Subject<boolean>;
   constructor(private authService:AuthService,private userService:UserService,private productService:ProductService) { }
   ngOnInit(){
     this.productService.getProducts().subscribe((products:any)=>{
@@ -22,12 +23,19 @@ export class CartService {
   }
 
   setCart(res:CartInterface[]){
+    this.cartItems.next([...res]);
     this.cartList = [...res];
-    this.cartItems.next(res);
   }
 
   getCart(){
     return this.cartItems.asObservable();
+  }
+
+  setCartLoaded(flag:boolean){
+    this.cartLoaded.next(flag);
+  }
+  getCartLoaded(){
+    return this.cartLoaded.asObservable();
   }
 
   addToCart(sku_id:string){
@@ -96,7 +104,7 @@ export class CartService {
         break;
       }
     }
-    this.setCart(this.cartList);
+    this.setCart([...this.cartList]);
   }
 
   decreaseQuantity(sku_id:string){
@@ -144,7 +152,7 @@ export class CartService {
         }
       }
     }
-    this.setCart(this.cartList);
+    this.setCart([...this.cartList]);
   }
 
   updateQuantity(sku_id:string,quantity:number){
@@ -177,7 +185,7 @@ export class CartService {
         }
       }
     }
-    this.setCart(this.cartList);
+    this.setCart([...this.cartList]);
   }
 
   initializeCart(){
@@ -243,6 +251,54 @@ export class CartService {
       }
       localStorage.setItem('cart',JSON.stringify(cart));
     }) 
+  }
+
+  populateCart(){
+    this.productService.getProducts().subscribe((products:any)=>{
+      const productList = products.products;
+      let cart = JSON.parse(localStorage.getItem('cart')||'');
+      const email = localStorage.getItem('email');
+      if(!email){
+        if(!cart){
+          localStorage.setItem('cart',JSON.stringify({'untracked':{}}));
+        }
+        else{
+          //do something with untracked items
+          let res:CartInterface[] = [];
+          for(let key in cart['untracked']){
+            let quantity:number = cart['untracked'][key];
+            for(let i=0;i<productList.length;i++){
+              if(productList[i].sku_id === key){
+                res.push({product:{...productList[i]},'quantity':quantity});
+                break;
+              }
+            }
+          }
+          this.setCart(res);
+          this.setCartLoaded(true);
+        }
+      }
+      else{
+        if(!cart){
+          localStorage.setItem('cart',JSON.stringify({[email]:{},'untracked':{}}))
+        }
+        else{
+          //do somthing with currently logged in user
+          let res:CartInterface[]= [];
+          for(let key in cart[email]){
+            let quantity:number = cart[email][key];
+            for(let i=0;i<productList.length;i++){
+              if(productList[i].sku_id === key){
+                res.push({product:{...productList[i]},'quantity':quantity});
+                break;
+              }
+            }
+          }
+          this.setCart(res);
+          this.setCartLoaded(true);
+        }
+      }
+    })
   }
 }
 

@@ -6,6 +6,8 @@ import { cartInterface } from '../Interface/cartInterface';
 import { UserInterface } from '../Interface/userInterface';
 import { UserService } from '../user.service';
 import { CartService } from '../cart.service';
+import { ProductService } from '../product.service';
+import { product } from '../Interface/productInterface';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,7 +18,7 @@ export class HeaderComponent {
   userlist:UserInterface[] = [];
   cartItems:cartInterface[] = [];
   totalItems:number = 0;
-  constructor(private authService:AuthService,private userService:UserService,private cartService:CartService){
+  constructor(private authService:AuthService,private userService:UserService,private cartService:CartService,private router:Router){
   }
 
   ngOnInit(){
@@ -43,7 +45,6 @@ export class HeaderComponent {
       this.cartItems = [...res];
       this.updateItemCount();
     });
-    
   }
 
   updateItemCount(){
@@ -64,6 +65,17 @@ export class HeaderComponent {
   }
   ngOnChanges(changes: SimpleChanges){
     this.updateItemCount();
+  }
+
+  handleLogout(){
+    localStorage.removeItem('email');
+    this.username = "";
+    this.cartService.setCart([]);
+    location.reload();
+  }
+
+  handleSearch(form:any){
+    this.router.navigate(['/products'],{queryParams:{search:form.search}});
   }
 
 }

@@ -18,8 +18,9 @@ export class CartComponent {
     this.cartService.initializeCart();
     this.cartService.validateCart();
     this.cartItems = this.cartService.cartList;
+    this.updateMrp();
     this.cartService.getCart().subscribe((res)=>{
-      this.cartItems = res;
+      this.cartItems = [...res];
       this.totalMrp = 0;
       for(let i=0;i<this.cartItems.length;i++){
         this.totalMrp+=this.cartItems[i].product.price * this.cartItems[i].quantity;
@@ -38,4 +39,13 @@ export class CartComponent {
   updateQuantity(sku_id:string,event:any){
     this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
   }
+
+  updateMrp(){
+    this.totalMrp = 0;
+      for(let i=0;i<this.cartItems.length;i++){
+        this.totalMrp+=this.cartItems[i].product.price * this.cartItems[i].quantity;
+      }
+  }
+
+
 }

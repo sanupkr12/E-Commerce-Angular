@@ -10,6 +10,7 @@
                         <span class="fs-6 me-2">Sort By:</span>
                         <div>
                             <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
+                                <option value="rel" selected>Relevance</option>
                                 <option value="phtl">Price : high to low</option>
                                 <option value="plth">Price : low to high</option>
                                 <option value="rhtl">Rating : high to low</option>
@@ -18,10 +19,9 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="row pt-3 no-gutters">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of products">
-                    <app-product-card [product]="item" [cart]="cartItems" ></app-product-card>
+            <div class="row pt-3 no-gutters" >
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of (search ? searchProducts:products)">
+                    <app-product-card [product]="item" [cart]="cartItems"></app-product-card>
                 </div>
             </div>
         </div>

@@ -22,54 +22,11 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.cartService.setCartLoaded(false);
     this.cartService.initializeCart();
     this.cartService.validateCart();
-    this.populateCart();
+    this.cartService.populateCart();
   };
 
-  populateCart(){
-    this.productService.getProducts().subscribe((products:any)=>{
-      const productList = products.products;
-      let cart = JSON.parse(localStorage.getItem('cart')||'');
-      const email = localStorage.getItem('email');
-      if(!email){
-        if(!cart){
-          localStorage.setItem('cart',JSON.stringify({'untracked':{}}));
-        }
-        else{
-          //do something with untracked items
-          let res:CartInterface[] = [];
-          for(let key in cart['untracked']){
-            let quantity:number = cart['untracked'][key];
-            for(let i=0;i<productList.length;i++){
-              if(productList[i].sku_id === key){
-                res.push({product:{...productList[i]},'quantity':quantity});
-                break;
-              }
-            }
-          }
-          this.cartService.setCart(res);
-        }
-      }
-      else{
-        if(!cart){
-          localStorage.setItem('cart',JSON.stringify({[email]:{},'untracked':{}}))
-        }
-        else{
-          //do somthing with currently logged in user
-          let res:CartInterface[]= [];
-          for(let key in cart[email]){
-            let quantity:number = cart[email][key];
-            for(let i=0;i<productList.length;i++){
-              if(productList[i].sku_id === key){
-                res.push({product:{...productList[i]},'quantity':quantity});
-                break;
-              }
-            }
-          }
-          this.cartService.setCart(res);
-        }
-      }
-    })
-  }
+  
 }

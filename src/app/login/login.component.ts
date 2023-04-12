@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import {Router} from "@angular/router"
 import { UserInterface } from '../Interface/userInterface';
 import { AuthService } from '../auth.service';
+import { CartService } from '../cart.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   userlist:UserInterface[] = [];
   errorMessage:string = '';
-  constructor(private router:Router,private userService:UserService,private authService:AuthService){
+  constructor(private router:Router,private userService:UserService,private authService:AuthService,private cartService:CartService){
     
   }
 
@@ -36,6 +37,7 @@ export class LoginComponent {
       if(user.email===email && user.password===password){
         localStorage.setItem('email',user.email);
         this.authService.setUser(user.username);
+        this.cartService.populateCart();
         this.router.navigate(['/products']);
       }
     });

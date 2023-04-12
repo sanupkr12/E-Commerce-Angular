@@ -9,11 +9,11 @@
             <div class="col-12 col-xs-8 offset-xs-1 col-sm-9 col-md-6 offset-md-3 col-lg-5 offset-lg-4 my-auto">
                 <div class="row">
                     <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 mt-2 mt-sm-0">
-                        <form>
+                        <form #searchForm="ngForm" (ngSubmit)="handleSearch(searchForm.value)">
                             <div class="input-group input-box">
                                 <input type="text" placeholder="Search Products..."
-                                class="form-control form-control-sm p-2 shadow-none fs-6 fw-light border-right-none">
-                                <button class="btn btn-sm btn-primary px-3"><i class="fa fa-solid fa-search"></i></button>
+                                class="form-control form-control-sm p-2 shadow-none fs-6 fw-light border-right-none" name="search" ngModel>
+                                <button class="btn btn-sm btn-primary px-3" type="submit"><i class="fa fa-solid fa-search"></i></button>
                             </div>
                         </form>
                     </div>
@@ -32,7 +32,16 @@
                             </div>
                             <div class="ms-sm-3 ms-md-4 ms-lg-4">
                                 <a class="btn btn-primary fs-6 fw-light" routerLink="login" *ngIf="username.length === 0">Login</a>
-                                <p >{{username}}</p>
+                                <div>
+                                    <div class="dropdown" *ngIf="username.length > 0">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          {{username}}
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                          <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>
+                                        </ul>
+                                      </div>
+                                </div>
                             </div>
                         </div>
                     </div>

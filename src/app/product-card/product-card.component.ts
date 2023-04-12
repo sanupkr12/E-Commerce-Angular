@@ -22,9 +22,6 @@ export class ProductCardComponent {
         break;
       }
     }
-    this.cartService.getCart().subscribe((res)=>{
-      this.cart = [...res];
-    })
   }
 
   addProduct(sku_id:string){
