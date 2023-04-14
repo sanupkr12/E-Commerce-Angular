@@ -7,13 +7,13 @@
                     <div class="col-md-4 p-0 cart-item-image">
                         <a routerLink="/product/{{item.product.sku_id}}">
                             <img src="{{item.product.thumbnail}}"
-                                class="h-100 w-100 rounded" alt="...">
+                                class="img-fluid cart-item-image" alt="...">
                         </a>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body position-relative p-0">
                             <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"
-                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0"><i
+                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0" (click)="removeItem(item.product.sku_id)"><i
                                     class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
                             <p class="fs-4 mb-0 fw-bold">{{item.product.title | titlecase}}</p>
                             <p class="fs-5 text-muted mb-0">{{item.product.brand}}</p>
@@ -67,12 +67,12 @@
                             <p class="mb-1 fs-5 fw-bold">{{totalMrp + 100 | currency:'INR'}}</p>
                         </div>
                     </div>
-                    <button class="btn btn-primary" id="checkout-btn">Checkout</button>
+                    <button class="btn btn-primary">Checkout</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mx-0" id="empty-cart-box" *ngIf="cartItems.length<=0">
+    <div class="row mx-0 empty-cart-box" *ngIf="cartItems.length<=0">
         <div class="col-md-12 d-flex flex-column align-items-center justify-content-center">
             <div id="empty-cart-image" class="mx-3 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" fill="currentColor" class="bi bi-cart-x" viewBox="0 0 16 16">
                 <path d="M7.354 5.646a.5.5 0 1 0-.708.708L7.793 7.5 6.646 8.646a.5.5 0 1 0 .708.708L8.5 8.207l1.146 1.147a.5.5 0 0 0 .708-.708L9.207 7.5l1.147-1.146a.5.5 0 0 0-.708-.708L8.5 6.793 7.354 5.646z"/>
@@ -80,7 +80,7 @@
               </svg></div>
             <h4>Hey, it feels so light!</h4>
             <p>There is nothing in your cart. Let's add some items.</p>
-            <a class="btn btn-primary mx-3" href="/html/products.html">Continue Shopping</a>
+            <a class="btn btn-primary mx-3" routerLink="/products">Continue Shopping</a>
         </div>
     </div>
 </div>

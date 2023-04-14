@@ -1,25 +1,56 @@
 <div class="container-fluid">
     <div class="row pt-4 ps-3">
         <div class="col-12 col-md-6 col-lg-4">
-            <form #previewForm="ngForm">
-                <div class="d-flex">
-                    <input type="file" name="orderFile" class="form-control me-3" ngModel>
-                    <button class="btn btn-primary">Preview</button>
-                </div>
-            </form>
+            <div class="d-flex">
+                <input type="file" name="orderFile" class="form-control me-3" (change)="handleFileUpload($event)">
+                <button class="btn btn-primary" (click)="previewOrder()">Preview</button>
+            </div>
         </div>
         <div class="offset-md-6 offset-lg-8"></div>
         <div class="col-12 mt-2">
-            <a href="#">Download Sample</a>
+            <a href="../../assets/samples/sample.tsv" download="sample.tsv">Download Sample</a>
         </div>
-        <div class="col-12 mt-5 pt-5">
+        <div class="col-12 mt-5 pt-5" *ngIf="previewItems===false">
             <div class="text-center pt-5">
                 <i class="fa fa-solid fa-file-pen preview-icon opacity-75"></i>
                 <p class="fs-3 opacity-50">Order preview goes here...</p>
             </div>
         </div>
-        <div class="col-12">
-
+        <div class="col-12 pt-5" *ngIf="previewItems">
+            <div class="d-flex justify-content-between">
+                <p>Order preview</p>
+                <button class="btn btn-primary" (click)="uploadOrder()">Upload</button>
+            </div>
+            <div class="table-responsive mt-1">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU ID</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orders">
+                            <td><img src="{{item.product.thumbnail}}" style="width:14rem;height:10rem;"><span
+                                    class="text-bold"><a routerLink="/product/{{item.product.sku_id}}"
+                                        target="_blank">{{item.product.title}}</a></span></td>
+                            <td>{{item.product.sku_id}}</td>
+                            <td>
+                                <div class="input-group">
+                                    <button class="btn btn-sm btn-warning"
+                                        (click)="decreaseQuantity(item.product.sku_id)">-</button>
+                                    <input type="text" class="border-0 border-top border-bottom text-center"
+                                        style="width:3em" (keyup)="updateQuantity(item.product.sku_id,$event)"
+                                        value="{{item.quantity}}">
+                                    <button class="btn btn-sm btn-warning"
+                                        (click)="increaseQuantity(item.product.sku_id)">+</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

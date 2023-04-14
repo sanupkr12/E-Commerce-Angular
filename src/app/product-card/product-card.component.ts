@@ -28,7 +28,6 @@ export class ProductCardComponent {
     this.quantity = 1;
     this.cartService.addToCart(sku_id);
     this.cart.push({product:this.product,quantity:this.quantity});
-    this.cartService.setCart(this.cart);
   }
 
   increaseQuantity(sku_id:string){

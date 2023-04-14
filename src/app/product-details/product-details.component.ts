@@ -54,7 +54,7 @@ export class ProductDetailsComponent {
     for(let i=0;i<this.cart.length;i++){
       if(this.cart[i].product.sku_id===sku_id){
         this.cart[i].quantity = this.quantity;
-        this.cartService.setCart(this.cart);
+        this.cartService.setCart([...this.cart]);
         break;
       }
     }
@@ -66,7 +66,7 @@ export class ProductDetailsComponent {
     for(let i=0;i<this.cart.length;i++){
       if(this.cart[i].product.sku_id===sku_id){
         this.cart[i].quantity = this.quantity;
-        this.cartService.setCart(this.cart);
+        this.cartService.setCart([...this.cart]);
         break;
       }
     }

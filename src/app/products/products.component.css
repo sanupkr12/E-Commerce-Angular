@@ -1,3 +1,21 @@
 .thumbnail-image{
     height:14rem;
 }
+
+.filter-btn{
+    display:none;
+}
+
+.filter-accordion{
+    display:block;
+}
+
+@media (max-width:768px){
+    .filter-btn{
+        display:block;
+    }
+
+    .filter-accordion{
+        display:none;
+    }
+}

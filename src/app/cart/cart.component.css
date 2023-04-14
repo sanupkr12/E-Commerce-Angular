@@ -1,0 +1,7 @@
+.cart-item-image{
+    aspect-ratio: 1;
+}
+
+.empty-cart-box{
+    min-height: 85vh;
+}

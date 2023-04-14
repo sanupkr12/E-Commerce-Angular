@@ -47,5 +47,9 @@ export class CartComponent {
       }
   }
 
+  removeItem(sku_id:string){
+    this.cartService.removeItem(sku_id);
+    setTimeout(()=>{this.updateMrp()},200);
+  }
 
 }

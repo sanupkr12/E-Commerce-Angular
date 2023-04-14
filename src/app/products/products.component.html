@@ -2,11 +2,12 @@
     <div class="row pt-3 mb-5">
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-sm -3 col-md-3">
-                    <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filters <i class="fa fa-solid fa-filter"></i></button>
+                <div class="col-12 col-sm-3 col-md-3">
+                    <button class="btn btn-primary filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">Filters <i class="fa fa-solid fa-filter"></i></button>
                 </div>
-                <div class="col-12  col-sm-8 offset-sm-1 col-md-6 offset-md-3">
-                    <div class="d-flex align-items-center justify-content-end me-3 mb-3">
+                <div class="col-12  col-sm-9 col-md-6 offset-md-3 mt-3 mt-sm-0">
+                    <div class="d-flex align-items-center justify-content-start justify-content-sm-end me-3 mb-3">
                         <span class="fs-6 me-2">Sort By:</span>
                         <div>
                             <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
@@ -19,67 +20,154 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-3 no-gutters" >
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of (search ? searchProducts:products)">
-                    <app-product-card [product]="item" [cart]="cartItems"></app-product-card>
+            <div class="row pt-3 no-gutters">
+                <div class="col-12 col-md-3 col-lg-2 filter-accordion">
+                    <div class="row">
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                    <button class="accordion-button shadow-none bg-white text-dark" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                        aria-controls="panelsStayOpen-collapseOne">
+                                        Price
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="panelsStayOpen-headingOne">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                                <input type="text" class="form-control" placeholder="min" (keyup)="handleMinPrice($event)" value="{{priceFilter['min']}}">
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-1 mt-lg-0">
+                                                <input type="text" class="form-control" placeholder="max" (keyup)="handleMaxPrice($event)" value="{{priceFilter['max']}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                    <button class="accordion-button collapsed shadow-none bg-white text-dark" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseTwo">
+                                        Rating
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="panelsStayOpen-headingTwo">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="rating" value="1" (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
+                                            <label class="form-check-label">1 <i
+                                                    class="fa fa-solid fa-star text-warning"></i> & above</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="rating" value="2" (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
+                                            <label class="form-check-label">2 <i
+                                                    class="fa fa-solid fa-star text-warning"></i> & above</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="rating" value="3" (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
+                                            <label class="form-check-label">3 <i
+                                                    class="fa fa-solid fa-star text-warning"></i> & above</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="rating" value="4" (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
+                                            <label class="form-check-label">4 <i
+                                                    class="fa fa-solid fa-star text-warning"></i> & above</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button class="accordion-button collapsed shadow-none bg-white text-dark" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseThree">
+                                        Brands
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="panelsStayOpen-headingThree">
+                                    <div class="accordion-body" *ngFor="let item of brands">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="brand" value="{{item}}" (change)="addBrandFilter($event)">
+                                            <label class="form-check-label">{{item | titlecase}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9 col-lg-10 mt-1 mt-md-0">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3"
+                            *ngFor="let item of (search ? searchProducts:products)" [ngClass]="{'d-none': !isValidBrand(item.brand) || item.rating<ratingFilter || item.price<priceFilter.min || item.price>priceFilter.max}">
+                            <app-product-card [product]="item" [cart]="cartItems"></app-product-card>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="offcanvas offcanvas-start" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-start" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample"
+    aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <div class="container-fluid">
-        <div class="row">
-            <legend>Price Range:</legend>
-            <div class="col-5">
-                <input type="text" class="form-control" placeholder="min-price">
-            </div>
-            <div class="col-2">
-                <p class="text-center">to</p>
-            </div>
-            <div class="col-5">
-                <input type="text" class="form-control" placeholder="max-price">
-            </div>
-            <div class="col-12 mt-3">
-                <form>
-                    <legend>Rating:</legend>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="rating">
-                        <label class="form-check-label">1 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="rating">
-                        <label class="form-check-label">2 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="rating">
-                        <label class="form-check-label">3 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="rating">
-                        <label class="form-check-label">4 <i class="fa fa-solid fa-star text-warning"></i> & above</label>
-                    </div>
-                </form>
-            </div>
-            <div class="col-12 mt-3">
-                <legend>Brand:</legend>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="brand">
-                    <label class="form-check-label">Apple</label>
+        <div class="container-fluid">
+            <div class="row">
+                <legend>Price:</legend>
+                <div class="col-5">
+                    <input type="text" class="form-control" placeholder="min" (keyup)="handleMinPrice($event)" value="{{priceFilter.min}}">
                 </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="brand">
-                    <label class="form-check-label">Apple</label>
+                <div class="col-2">
+                    <p class="text-center">to</p>
                 </div>
-
+                <div class="col-5">
+                    <input type="text" class="form-control" placeholder="max" (keyup)="handleMaxPrice($event)" value="{{priceFilter.max}}">
+                </div>
+                <div class="col-12 mt-3">
+                    <form>
+                        <legend>Rating:</legend>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rating" value="1" (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
+                            <label class="form-check-label">1 <i class="fa fa-solid fa-star text-warning"></i> &
+                                above</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rating" value="2" (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
+                            <label class="form-check-label">2 <i class="fa fa-solid fa-star text-warning"></i> &
+                                above</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rating" value="3" (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
+                            <label class="form-check-label">3 <i class="fa fa-solid fa-star text-warning"></i> &
+                                above</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rating" value="4" (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
+                            <label class="form-check-label">4 <i class="fa fa-solid fa-star text-warning"></i> &
+                                above</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 mt-3">
+                    <legend>Brand:</legend>
+                    <div *ngFor="let item of brands">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="brand" value="{{item}}" (change)="addBrandFilter($event)">
+                            <label class="form-check-label">{{item | titlecase}}</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>

@@ -26,7 +26,6 @@ export class AppComponent {
     this.cartService.initializeCart();
     this.cartService.validateCart();
     this.cartService.populateCart();
-  };
-
-  
+    this.cartService.initializeSessionStorage();
+  }; 
 }

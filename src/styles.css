@@ -21,7 +21,7 @@ html{
     border:none;
 }
 
-.product-description{
+.text-wrapper{
     min-height: 1.5rem;
     white-space: nowrap;
     overflow: hidden;
@@ -29,7 +29,7 @@ html{
 }
 
 .bg-main{
-    background-color:beige;
+    background-color:var(--bs-light);
 }
 
 .hover-pointer{
@@ -43,3 +43,24 @@ html{
 .w-85{
     width:85%;
 }
+
+/* .accordion-button.collapsed::after {
+    color: black !important;
+} */
+/* 
+.bootstrap-select>.dropdown-toggle{
+	background: #EDF2F5;
+	border: 0;
+	width: 100%;
+	display: block;
+	padding: 16px 15px;
+	color: #000000;
+	font-size: 14px;
+	font-weight: 500;
+	letter-spacing: 0.030em;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: 'Roboto', sans-serif;
+} */
