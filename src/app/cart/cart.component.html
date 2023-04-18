@@ -13,7 +13,7 @@
                     <div class="col-md-8">
                         <div class="card-body position-relative p-0">
                             <button data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove from cart"
-                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0" (click)="removeItem(item.product.sku_id)"><i
+                                class="btn btn-outline-danger btn-sm border-0 end-0 position-absolute top-0" (click)="deleteItem(item.product.sku_id)"><i
                                     class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
                             <p class="fs-4 mb-0 fw-bold">{{item.product.title | titlecase}}</p>
                             <p class="fs-5 text-muted mb-0">{{item.product.brand}}</p>
@@ -67,7 +67,7 @@
                             <p class="mb-1 fs-5 fw-bold">{{totalMrp + 100 | currency:'INR'}}</p>
                         </div>
                     </div>
-                    <button class="btn btn-primary">Checkout</button>
+                    <button class="btn btn-primary" (click)="placeOrder()">Checkout</button>
                 </div>
             </div>
         </div>
@@ -84,3 +84,32 @@
         </div>
     </div>
 </div>
+<div #successToast class="toast success-toast bg-success text-white position-absolute" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{success_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+<div #errorToast class="toast error-toast bg-danger text-white position-absolute " role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{error_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+<div #removeModal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-solid fa-warning text-warning"></i> Remove item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure! you want to remove <span class="fw-bold">{{to_delete_title}}</span>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button #removeBtn type="button" class="btn btn-danger" (click)="removeItem()">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>

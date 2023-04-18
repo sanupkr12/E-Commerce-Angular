@@ -2,7 +2,7 @@
     <div class="row pt-4 ps-3">
         <div class="col-12 col-md-6 col-lg-4">
             <div class="d-flex">
-                <input type="file" name="orderFile" class="form-control me-3" (change)="handleFileUpload($event)">
+                <input #orderFile type="file" name="orderFile" class="form-control me-3" (change)="handleFileUpload($event)" accept=".tsv">
                 <button class="btn btn-primary" (click)="previewOrder()">Preview</button>
             </div>
         </div>
@@ -10,32 +10,48 @@
         <div class="col-12 mt-2">
             <a href="../../assets/samples/sample.tsv" download="sample.tsv">Download Sample</a>
         </div>
-        <div class="col-12 mt-5 pt-5" *ngIf="previewItems===false">
+        <div class="col-12 mt-5 pt-5" *ngIf="!previewItems && !errorPreview">
             <div class="text-center pt-5">
                 <i class="fa fa-solid fa-file-pen preview-icon opacity-75"></i>
                 <p class="fs-3 opacity-50">Order preview goes here...</p>
             </div>
         </div>
-        <div class="col-12 pt-5" *ngIf="previewItems">
+        <div class="col-12 mt-5 pt-5" *ngIf="!previewItems && errorPreview">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Row</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of errorList">
+                        <td class="fs-6">{{item.row}}</td>
+                        <td class="text-danger">{{item.error}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 pt-5" *ngIf="previewItems && !errorPreview">
             <div class="d-flex justify-content-between">
                 <p>Order preview</p>
-                <button class="btn btn-primary" (click)="uploadOrder()">Upload</button>
+                <button class="btn btn-primary" (click)="placeOrder()">Place order</button>
             </div>
             <div class="table-responsive mt-1">
                 <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
-                            <th>Product</th>
                             <th>SKU ID</th>
+                            <th>Product</th>
                             <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of orders">
+                            <td class="fs-6 fw-bold">{{item.product.sku_id}}</td>
                             <td><img src="{{item.product.thumbnail}}" style="width:14rem;height:10rem;"><span
                                     class="text-bold"><a routerLink="/product/{{item.product.sku_id}}"
                                         target="_blank">{{item.product.title}}</a></span></td>
-                            <td>{{item.product.sku_id}}</td>
                             <td>
                                 <div class="input-group">
                                     <button class="btn btn-sm btn-warning"
@@ -54,3 +70,16 @@
         </div>
     </div>
 </div>
+<div #successToast class="toast success-toast bg-success text-white position-absolute" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{success_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+<div #errorToast class="toast error-toast bg-danger text-white position-absolute " role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{error_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+

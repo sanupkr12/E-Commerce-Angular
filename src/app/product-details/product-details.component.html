@@ -6,7 +6,9 @@
             </div>
             <div class="row no-gutters w-85 ps-3 mt-3 ms-3">
                 <div class="col-3" *ngFor="let image of product.images;index as i">
-                    <img src={{image}} class="img-fluid preview-image hover-pointer" *ngIf="i<4" (click)="changeDisplayImage($event)" [ngClass]="{'preview-border shadow' : image===display_image}">
+                    <img src={{image}} class="img-fluid preview-image hover-pointer" *ngIf="i<4"
+                        (click)="changeDisplayImage($event)"
+                        [ngClass]="{'preview-border shadow' : image===display_image}">
                 </div>
             </div>
         </div>
@@ -19,13 +21,15 @@
                     <form>
                         <div class="input-group w-auto">
                             <button class="btn btn-warning" (click)="decreaseQuantity(sku_id)">-</button>
-                            <input type="text" class="quantity-input border-0 border-top border-bottom text-center" (keyup)="updateQuantity(sku_id,$event)" value="{{quantity}}">
+                            <input type="text" class="quantity-input border-0 border-top border-bottom text-center"
+                                (keyup)="updateQuantity(sku_id,$event)" value="{{quantity}}">
                             <button class="btn btn-warning" (click)="increaseQuantity(sku_id)">+</button>
                         </div>
                     </form>
                     <a routerLink="/cart" class="btn btn-dark ms-3">GO TO CART</a>
                 </div>
-                <button class="btn btn-dark d-none" (click)="addProduct(sku_id)" [ngClass]="{'d-none':quantity>0}">ADD TO CART</button>
+                <button class="btn btn-dark d-none" (click)="addProduct(sku_id)" [ngClass]="{'d-none':quantity>0}">ADD
+                    TO CART</button>
                 <p class="fs-6 text-muted mt-3 py-3 border-top">{{product.description}}</p>
                 <p class="py-1"><strong>Available offers</strong></p>
                 <p>Bank Offer5% Cashback on Flipkart Axis Bank CardT&C</p>
@@ -37,6 +41,39 @@
                     Saturdays, Sundays or holidays.</p>
                 <p><strong>Free shipping</strong></p>
                 <p>We offer free shipping to Switzerland and Liechtenstein with orders of over CHF 80.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div #successToast class="toast success-toast bg-success text-white position-absolute" role="alert"
+    aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{success_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+<div #errorToast class="toast error-toast bg-danger text-white position-absolute " role="alert" aria-live="assertive"
+    aria-atomic="true" data-bs-autohide="false">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{error_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+<div #removeModal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-solid fa-warning text-warning"></i>
+                    Remove item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure! you want to remove the item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button #removeBtn type="button" class="btn btn-danger" (click)="removeItem()">Remove</button>
             </div>
         </div>
     </div>

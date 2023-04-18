@@ -17,6 +17,7 @@ import { UserService } from './user.service';
 import { ProductService } from './product.service';
 import { CartService } from './cart.service';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
     CartComponent,
     OrderUploadComponent,
     LoginComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

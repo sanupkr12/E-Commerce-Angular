@@ -171,12 +171,10 @@ export class CartService {
         localStorage.setItem('cart',JSON.stringify({[email]:{},'untracked':{}}));
       }
       else{
+        cart[email][sku_id]-=1;
         if(cart[email][sku_id]<=0)
         {
           delete cart[email][sku_id];
-        }
-        else{
-          cart[email][sku_id]-=1;
         }
         localStorage.setItem('cart',JSON.stringify(cart));
       }
@@ -247,6 +245,8 @@ export class CartService {
   removeItem(sku_id:string){
     const email = localStorage.getItem('email');
     let cart = JSON.parse(localStorage.getItem('cart') || '');
+    this.cartList = this.cartList.filter((item)=>item.product.sku_id!=sku_id);
+    this.setCart([...this.cartList]);
     if(email!=null){
       if(!cart){
         localStorage.setItem('cart',JSON.stringify({[email]:{},'untracked':{}}));
@@ -265,13 +265,6 @@ export class CartService {
         localStorage.setItem('cart',JSON.stringify(cart));
       }
     }
-    for(let i=0;i<this.cartList.length;i++){
-      if(this.cartList[i].product.sku_id === sku_id)
-      { 
-        delete this.cartList[i];
-      }
-    }
-    this.setCart([...this.cartList]);
   }
 
   addItem(sku_id:string,quantity:number){

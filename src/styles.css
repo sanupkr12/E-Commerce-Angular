@@ -18,6 +18,10 @@ html{
 }
 
 .quantity-input:focus{
+    outline:none;
+}
+
+.quantity-input:focus{
     border:none;
 }
 
@@ -42,6 +46,16 @@ html{
 
 .w-85{
     width:85%;
+}
+
+.success-toast{
+    top:5rem;
+    right:1rem;
+}
+
+.error-toast{
+    top:5rem;
+    right:1rem;
 }
 
 /* .accordion-button.collapsed::after {

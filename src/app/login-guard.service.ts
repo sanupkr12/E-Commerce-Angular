@@ -12,13 +12,13 @@ export class LoginGuardService implements CanActivate{
   userlist:UserInterface[] = [];
   username:string = "";
   constructor(private userService:UserService,private authService:AuthService,private router:Router) {
-    this.authService.getUser().subscribe((user)=>{
-      this.username = user;
-    })
+    
   }
 
   ngOnInit(){
-    
+    this.authService.getUser().subscribe((user)=>{
+      this.username = user;
+    })
   }
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean{

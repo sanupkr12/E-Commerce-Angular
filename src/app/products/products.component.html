@@ -2,33 +2,24 @@
     <div class="row pt-3 mb-5">
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-sm-3 col-md-3">
-                    <button class="btn btn-primary filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-                        aria-controls="offcanvasExample">Filters <i class="fa fa-solid fa-filter"></i></button>
-                </div>
-                <div class="col-12  col-sm-9 col-md-6 offset-md-3 mt-3 mt-sm-0">
-                    <div class="d-flex align-items-center justify-content-start justify-content-sm-end me-3 mb-3">
-                        <span class="fs-6 me-2">Sort By:</span>
-                        <div>
-                            <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
-                                <option value="rel" selected>Relevance</option>
-                                <option value="phtl">Price : high to low</option>
-                                <option value="plth">Price : low to high</option>
-                                <option value="rhtl">Rating : high to low</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+
+
             </div>
             <div class="row pt-3 no-gutters">
-                <div class="col-12 col-md-3 col-lg-2 filter-accordion">
+                <div class="col-12 col-md-3 col-lg-2">
                     <div class="row">
-                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                        <div>
+                            <button class="btn btn-primary filter-btn" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filters <i
+                                    class="fa fa-solid fa-filter"></i></button>
+                        </div>
+                        <div class="accordion filter-accordion" id="accordionPanelsStayOpenExample">
+                            <p class="fs-5 fw-light">Filters</p>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                    <button class="accordion-button shadow-none bg-white text-dark" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                                        aria-controls="panelsStayOpen-collapseOne">
+                                    <button class="accordion-button shadow-none bg-white text-dark" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
+                                        aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                         Price
                                     </button>
                                 </h2>
@@ -37,10 +28,12 @@
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                                                <input type="text" class="form-control" placeholder="min" (keyup)="handleMinPrice($event)" value="{{priceFilter['min']}}">
+                                                <input type="text" class="form-control" placeholder="min"
+                                                    (keyup)="handleMinPrice($event)" value="{{priceFilter['min']}}">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-1 mt-lg-0">
-                                                <input type="text" class="form-control" placeholder="max" (keyup)="handleMaxPrice($event)" value="{{priceFilter['max']}}">
+                                                <input type="text" class="form-control" placeholder="max"
+                                                    (keyup)="handleMaxPrice($event)" value="{{priceFilter['max']}}">
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +41,8 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                    <button class="accordion-button collapsed shadow-none bg-white text-dark" type="button" data-bs-toggle="collapse"
+                                    <button class="accordion-button collapsed shadow-none bg-white text-dark"
+                                        type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                                         aria-controls="panelsStayOpen-collapseTwo">
                                         Rating
@@ -58,22 +52,26 @@
                                     aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="rating" value="1" (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
+                                            <input class="form-check-input" type="radio" name="rating" value="1"
+                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
                                             <label class="form-check-label">1 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="rating" value="2" (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
+                                            <input class="form-check-input" type="radio" name="rating" value="2"
+                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
                                             <label class="form-check-label">2 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="rating" value="3" (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
+                                            <input class="form-check-input" type="radio" name="rating" value="3"
+                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
                                             <label class="form-check-label">3 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="rating" value="4" (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
+                                            <input class="form-check-input" type="radio" name="rating" value="4"
+                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
                                             <label class="form-check-label">4 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
@@ -82,7 +80,8 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                    <button class="accordion-button collapsed shadow-none bg-white text-dark" type="button" data-bs-toggle="collapse"
+                                    <button class="accordion-button collapsed shadow-none bg-white text-dark"
+                                        type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
                                         aria-controls="panelsStayOpen-collapseThree">
                                         Brands
@@ -92,7 +91,9 @@
                                     aria-labelledby="panelsStayOpen-headingThree">
                                     <div class="accordion-body" *ngFor="let item of brands">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="brand" value="{{item}}" (change)="addBrandFilter($event)">
+                                            <input type="checkbox" class="form-check-input" name="brand"
+                                                value="{{item}}" (change)="addBrandFilter($event)"
+                                                [checked]="brandFilters.indexOf(item.toLowerCase())>-1">
                                             <label class="form-check-label">{{item | titlecase}}</label>
                                         </div>
                                     </div>
@@ -101,10 +102,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-9 col-lg-10 mt-1 mt-md-0">
+                <div class="col-12 col-md-9 col-lg-10 mt-3 mt-md-0">
                     <div class="row">
+                        <div>
+                            <div
+                                class="d-flex align-items-center justify-content-start justify-content-sm-end me-3 mb-3">
+                                <span class="fs-6 me-2">Sort By:</span>
+                                <div>
+                                    <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
+                                        <option value="rel" selected>Relevance</option>
+                                        <option value="phtl">Price : high to low</option>
+                                        <option value="plth">Price : low to high</option>
+                                        <option value="rhtl">Rating : high to low</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3"
-                            *ngFor="let item of (search ? searchProducts:products)" [ngClass]="{'d-none': !isValidBrand(item.brand) || item.rating<ratingFilter || item.price<priceFilter.min || item.price>priceFilter.max}">
+                            *ngFor="let item of (search ? searchProducts:products)"
+                            [ngClass]="{'d-none': !isValidBrand(item.brand) || item.rating<ratingFilter || item.price<priceFilter.min || item.price>priceFilter.max}">
                             <app-product-card [product]="item" [cart]="cartItems"></app-product-card>
                         </div>
                     </div>
@@ -125,34 +141,40 @@
             <div class="row">
                 <legend>Price:</legend>
                 <div class="col-5">
-                    <input type="text" class="form-control" placeholder="min" (keyup)="handleMinPrice($event)" value="{{priceFilter.min}}">
+                    <input type="text" class="form-control" placeholder="min" (keyup)="handleMinPrice($event)"
+                        value="{{priceFilter.min}}">
                 </div>
                 <div class="col-2">
                     <p class="text-center">to</p>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" placeholder="max" (keyup)="handleMaxPrice($event)" value="{{priceFilter.max}}">
+                    <input type="text" class="form-control" placeholder="max" (keyup)="handleMaxPrice($event)"
+                        value="{{priceFilter.max}}">
                 </div>
                 <div class="col-12 mt-3">
                     <form>
                         <legend>Rating:</legend>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rating" value="1" (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
+                            <input class="form-check-input" type="radio" name="rating" value="1"
+                                (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
                             <label class="form-check-label">1 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rating" value="2" (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
+                            <input class="form-check-input" type="radio" name="rating" value="2"
+                                (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
                             <label class="form-check-label">2 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rating" value="3" (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
+                            <input class="form-check-input" type="radio" name="rating" value="3"
+                                (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
                             <label class="form-check-label">3 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rating" value="4" (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
+                            <input class="form-check-input" type="radio" name="rating" value="4"
+                                (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
                             <label class="form-check-label">4 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
@@ -162,12 +184,27 @@
                     <legend>Brand:</legend>
                     <div *ngFor="let item of brands">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="brand" value="{{item}}" (change)="addBrandFilter($event)">
+                            <input type="checkbox" class="form-check-input" name="brand" value="{{item}}"
+                                (change)="addBrandFilter($event)">
                             <label class="form-check-label">{{item | titlecase}}</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div #successToast class="toast success-toast bg-success text-white position-absolute" role="alert"
+    aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{success_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+<div #errorToast class="toast error-toast bg-danger text-white position-absolute " role="alert" aria-live="assertive"
+    aria-atomic="true" data-bs-autohide="false">
+    <div class="toast-body d-flex justify-content-between">
+        <p class="fs-6 mb-0">{{error_message}}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
 </div>

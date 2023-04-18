@@ -12,15 +12,15 @@
         <p class="card-subtitle mb-2">{{product.price | currency:'INR'}}</p>
         <p class="card-text text-wrapper">{{product.description}}</p>
         <div class="row" [ngClass]="{'d-none':quantity<=0}">
-            <div class="col-xs-6 col-sm-12 col-xl-6 pe-0">
+            <div class="col-6 col-sm-6 col-md-12 col-xl-6 pe-0">
                 <div class="input-group">
                     <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(product.sku_id)">-</button>
                     <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em" (keyup)="updateQuantity(product.sku_id,$event)" value="{{quantity}}">
                     <button class="btn btn-sm btn-warning" (click)="increaseQuantity(product.sku_id)">+</button>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-12 col-xl-6 mt-1 mt-xl-0 text-xl-end">
-                <a class="btn btn-sm btn-dark" routerLink="/cart" >GO TO CART</a>
+            <div class="col-6 col-sm-6 col-md-12 col-xl-6 mt-1 mt-xl-0 text-end text-md-start text-xl-end pe-1 pe-md-0 pe-lg-1">
+                <a class="btn btn-sm btn-dark px-2 px-md-1 px-lg-2" routerLink="/cart" target="_self" >GO TO CART</a>
             </div>
         </div>
         <button class="btn btn-sm btn-dark" (click)="addProduct(product.sku_id)" [ngClass]="{'d-none':quantity>0}">ADD TO CART</button>

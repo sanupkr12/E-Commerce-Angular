@@ -49,20 +49,12 @@ export class HeaderComponent {
 
   updateItemCount(){
     let itemCount = 0;
-    let email = localStorage.getItem('email');
-    let cart = JSON.parse(localStorage.getItem('cart') || '');
-    if(!email){
-      for(const key in cart['untracked']){
-        itemCount+= cart['untracked'][key];
-      }
-    }
-    else{
-      for(const key in cart[email]){
-        itemCount+= cart[email][key];
-      }
+    for(let i=0;i<this.cartItems.length;i++){
+      itemCount+=this.cartItems[i].quantity;
     }
     this.totalItems = itemCount;
   }
+
   ngOnChanges(changes: SimpleChanges){
     this.updateItemCount();
   }

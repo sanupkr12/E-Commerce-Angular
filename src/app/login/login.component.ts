@@ -27,7 +27,6 @@ export class LoginComponent {
         }
       }
     })
-    
   }
 
   handleLogin(formData:userForm){

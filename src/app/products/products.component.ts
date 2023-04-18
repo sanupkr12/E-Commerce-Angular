@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ProductService } from '../product.service';
 import { product } from '../Interface/productInterface';
 import { CartService } from '../cart.service';
 import { cartInterface } from '../Interface/cartInterface';
 import { ActivatedRoute } from '@angular/router';
 import { priceInterface } from '../Interface/priceInterface';
+import { ToastService } from '../toast.service';
+// import { Toast } from "bootstrap";
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -19,9 +21,14 @@ export class ProductsComponent {
   ratingFilter:number=0;
   priceFilter:priceInterface = {} as priceInterface;
   brandFilters:string[] = [];
-  constructor(private productService: ProductService,private cartService:CartService,private router:ActivatedRoute){
+  success_message:string = "";
+  error_message:string = "";
+  constructor(private productService: ProductService,private cartService:CartService,private router:ActivatedRoute,private toastService:ToastService){
 
   }
+
+
+  
 
   ngOnInit(){
     this.products = this.cartService.productList;
@@ -91,6 +98,10 @@ export class ProductsComponent {
   }
 
   updateQuantity(sku_id:string,event:any){
+    if(isNaN(event.target.value)){
+      this.handleErrorToast("Not a valid number");
+      return;
+    }
     this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
   }
 
@@ -159,12 +170,30 @@ export class ProductsComponent {
   }
 
   handleMinPrice(event:any){
-    this.priceFilter = {min:parseInt(event.target.value),max:this.priceFilter.max};
+    let value = event.target.value;
+    if(isNaN(value)){
+      this.handleErrorToast("Not a valid number");
+      return;
+    }
+    if(parseInt(value)>this.priceFilter.max){
+      this.handleErrorToast("min price must be less than max price");
+      return;
+    }
+    this.priceFilter = {min:parseInt(value),max:this.priceFilter.max};
     this.cartService.setPriceFilter(this.priceFilter);
   }
 
   handleMaxPrice(event:any){
-    this.priceFilter = {min:this.priceFilter.min,max:parseInt(event.target.value)};
+    let value = event.target.value;
+    if(isNaN(value)){
+      this.handleErrorToast("Not a valid number");
+      return;
+    }
+    if(this.priceFilter.min>parseInt(value)){
+      this.handleErrorToast("min price must be less than max price");
+      return;
+    }
+    this.priceFilter = {min:this.priceFilter.min,max:parseInt(value)};
     this.cartService.setPriceFilter(this.priceFilter);
   }
 
@@ -179,6 +208,24 @@ export class ProductsComponent {
     }else{
       return true;
     }
+  }
+
+  handleErrorToast(event:any){
+    this.error_message = event;
+    this.toastService.setToast({status:'error',message:event});
+    // this.successToast?.hide();
+    // if(this.errorToast!=null){
+    //   this.errorToast.show();
+    // }
+  }
+
+  handleSucessToast(event:any){
+    this.success_message = event;
+    this.toastService.setToast({status:'success',message:event});
+    // this.errorToast?.hide();
+    // if(this.successToast!=null){
+    //   this.successToast.show();
+    // }
   }
   
 }
