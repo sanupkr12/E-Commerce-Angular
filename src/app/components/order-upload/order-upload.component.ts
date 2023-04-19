@@ -1,15 +1,15 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { CartService } from '../cart.service';
+import { CartService } from '../../services/cart.service';
 import { Papa,ParseResult } from 'ngx-papaparse';
 import { Observable } from 'rxjs';
-import { orderData } from '../Interface/orderData';
-import { cartInterface } from '../Interface/cartInterface';
-import { product } from '../Interface/productInterface';
-import { ProductService } from '../product.service';
+import { orderData } from '../../Interface/orderData';
+import { cartInterface } from '../../Interface/cartInterface';
+import { product } from '../../Interface/productInterface';
+import { ProductService } from '../../services/product.service';
 import * as $ from "jquery";
 // import { Toast } from 'bootstrap';
-import { errorOrder } from '../Interface/errorOrderInterface';
-import { downloadOrder } from '../Interface/downloadOrderInterface';
+import { errorOrder } from '../../Interface/errorOrderInterface';
+import { downloadOrder } from '../../Interface/downloadOrderInterface';
 import { ArrayData } from 'ngx-papaparse/lib/interfaces/unparse-data';
 declare global {
   interface Navigator {

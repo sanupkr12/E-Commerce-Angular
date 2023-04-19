@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ToastService } from '../toast.service';
-import { Toast } from '../Interface/toastInterface';
+import { ToastService } from '../../services/toast.service';
+import { Toast } from '../../Interface/toastInterface';
 declare var bootstrap: any;
 @Component({
   selector: 'app-toast',

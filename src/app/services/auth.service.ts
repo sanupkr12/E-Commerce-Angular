@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { UserInterface } from './Interface/userInterface';
+import { UserInterface } from '../Interface/userInterface';
 import { UserService } from './user.service';
 
 @Injectable({

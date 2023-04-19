@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { UserInterface } from './Interface/userInterface';
+import { UserInterface } from '../Interface/userInterface';
 import { ProductService } from './product.service';
 import { UserService } from './user.service';
-import {product as ProductInterface} from "./Interface/productInterface";
-import { cartInterface as CartInterface } from './Interface/cartInterface';
+import {product as ProductInterface} from "../Interface/productInterface";
+import { cartInterface as CartInterface } from '../Interface/cartInterface';
 import { Subject } from 'rxjs';
-import { priceInterface } from './Interface/priceInterface';
+import { priceInterface } from '../Interface/priceInterface';
 @Injectable({
   providedIn: 'root'
 })

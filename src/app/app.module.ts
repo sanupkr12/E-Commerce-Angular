@@ -4,20 +4,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { ProductsComponent } from './products/products.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CartComponent } from './cart/cart.component';
-import { OrderUploadComponent } from './order-upload/order-upload.component';
-import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartComponent } from './components/cart/cart.component';
+import { OrderUploadComponent } from './components/order-upload/order-upload.component';
+import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule} from "@angular/common/http"
-import { AuthService } from './auth.service';
-import { UserService } from './user.service';
-import { ProductService } from './product.service';
-import { CartService } from './cart.service';
-import { ProductCardComponent } from './product-card/product-card.component';
-import { ToastComponent } from './toast/toast.component';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
+import { CartService } from './services/cart.service';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [

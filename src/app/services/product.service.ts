@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {product, product as ProductInterface} from "./Interface/productInterface"
+import {product, product as ProductInterface} from "../Interface/productInterface"
 import { shareReplay } from 'rxjs';
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { UserInterface } from './Interface/userInterface';
+import { UserInterface } from '../Interface/userInterface';
 import { UserService } from './user.service';
 
 @Injectable({

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { CartService } from '../cart.service';
-import { cartInterface } from '../Interface/cartInterface';
-import {product as ProductInterface} from '../Interface/productInterface';
-import { ToastService } from '../toast.service';
+import { CartService } from '../../services/cart.service';
+import { cartInterface } from '../../Interface/cartInterface';
+import {product as ProductInterface} from '../../Interface/productInterface';
+import { ToastService } from '../../services/toast.service';
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',

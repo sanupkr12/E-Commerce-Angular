@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Toast } from './Interface/toastInterface';
+import { Toast } from '../Interface/toastInterface';
 import { Subject } from 'rxjs';
 
 @Injectable({

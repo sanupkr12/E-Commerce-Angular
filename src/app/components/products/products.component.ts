@@ -1,11 +1,11 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ProductService } from '../product.service';
-import { product } from '../Interface/productInterface';
-import { CartService } from '../cart.service';
-import { cartInterface } from '../Interface/cartInterface';
+import { ProductService } from '../../services/product.service';
+import { product } from '../../Interface/productInterface';
+import { CartService } from '../../services/cart.service';
+import { cartInterface } from '../../Interface/cartInterface';
 import { ActivatedRoute } from '@angular/router';
-import { priceInterface } from '../Interface/priceInterface';
-import { ToastService } from '../toast.service';
+import { priceInterface } from '../../Interface/priceInterface';
+import { ToastService } from '../../services/toast.service';
 // import { Toast } from "bootstrap";
 @Component({
   selector: 'app-products',

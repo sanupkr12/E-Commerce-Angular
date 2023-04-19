@@ -1,9 +1,9 @@
 import { Component,ElementRef,ViewChild } from '@angular/core';
-import { CartService } from '../cart.service';
-import { ProductService } from '../product.service';
-import { product as ProductInterface } from '../Interface/productInterface';
-import { cartInterface as CartInterface } from '../Interface/cartInterface';
-import { ToastService } from '../toast.service';
+import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
+import { product as ProductInterface } from '../../Interface/productInterface';
+import { cartInterface as CartInterface } from '../../Interface/cartInterface';
+import { ToastService } from '../../services/toast.service';
 import * as $ from "jquery";
 import { Papa } from 'ngx-papaparse';
 @Component({

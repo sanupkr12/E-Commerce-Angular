@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { userForm } from '../model/userForm.model';
-import { UserService } from '../user.service';
+import { userForm } from '../../model/userForm.model';
+import { UserService } from '../../services/user.service';
 import {Router} from "@angular/router"
-import { UserInterface } from '../Interface/userInterface';
-import { AuthService } from '../auth.service';
-import { CartService } from '../cart.service';
+import { UserInterface } from '../../Interface/userInterface';
+import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

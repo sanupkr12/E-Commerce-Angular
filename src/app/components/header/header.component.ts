@@ -1,13 +1,13 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import {Router} from '@angular/router';
-import { AuthService } from '../auth.service';
-import { cartInterface } from '../Interface/cartInterface';
-import { UserInterface } from '../Interface/userInterface';
-import { UserService } from '../user.service';
-import { CartService } from '../cart.service';
-import { ProductService } from '../product.service';
-import { product } from '../Interface/productInterface';
+import { AuthService } from '../../services/auth.service';
+import { cartInterface } from '../../Interface/cartInterface';
+import { UserInterface } from '../../Interface/userInterface';
+import { UserService } from '../../services/user.service';
+import { CartService } from '../../services/cart.service';
+import { ProductService } from '../../services/product.service';
+import { product } from '../../Interface/productInterface';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

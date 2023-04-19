@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CartComponent } from './cart/cart.component';
-import { LoginComponent } from './login/login.component';
-import { OrderUploadComponent } from './order-upload/order-upload.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductsComponent } from './products/products.component';
-import { LoginGuardService } from './login-guard.service';
+import { CartComponent } from './components/cart/cart.component';
+import { LoginComponent } from './components/login/login.component';
+import { OrderUploadComponent } from './components/order-upload/order-upload.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductsComponent } from './components/products/products.component';
+import { LoginGuardService } from './services/login-guard.service';
 const routes: Routes = [
   {
     path:'',
