@@ -266,6 +266,30 @@ export class CartService {
       }
     }
   }
+  clearCart(){
+    const email = localStorage.getItem('email');
+    let cart = JSON.parse(localStorage.getItem('cart') || '');
+    this.cartList = [];
+    this.setCart([...this.cartList]);
+    if(email!=null){
+      if(!cart){
+        localStorage.setItem('cart',JSON.stringify({[email]:{},'untracked':{}}));
+      }
+      else{
+        cart[email] = {};
+        localStorage.setItem('cart',JSON.stringify(cart));
+      }
+    }
+    else{
+      if(!cart){
+        localStorage.setItem('cart',JSON.stringify({'untracked':{}}));
+      }
+      else{
+        cart['untracked'] = {};
+        localStorage.setItem('cart',JSON.stringify(cart));
+      }
+    }
+  }
 
   addItem(sku_id:string,quantity:number){
     const email = localStorage.getItem('email');
@@ -445,6 +469,7 @@ export class CartService {
     sessionStorage.setItem('filter',JSON.stringify({price:{min:0,max:10000000},rating:0,brands:[]}));
     this.setRatingFilter(0);
     this.setPriceFilter({min:0,max:1000000});
+    this.setBrandFilter([]);
   }
   
   initializeSessionStorage(){

@@ -4,8 +4,8 @@ import { ProductService } from '../../services/product.service';
 import { product as ProductInterface } from '../../Interface/productInterface';
 import { cartInterface as CartInterface } from '../../Interface/cartInterface';
 import { ToastService } from '../../services/toast.service';
-import * as $ from "jquery";
 import { Papa } from 'ngx-papaparse';
+declare var bootstrap: any;
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -18,10 +18,12 @@ export class CartComponent {
   success_message:string = "";
   private _to_delete_sku:string = "";
   to_delete_title:string = "";
-  displayModal:string = "none";
+  placedOrder:boolean = false;
+  removeModal:any;
+  @ViewChild('removeModal') removeModalEl!:ElementRef;
   constructor(private cartService:CartService,private productService:ProductService,private toastService:ToastService,private papa:Papa){
   }
-  @ViewChild('removeModal',{static:true}) removeModalEl!:ElementRef<HTMLModElement>;
+
   ngOnInit(){
     this.cartService.initializeCart();
     this.cartService.validateCart();
@@ -32,6 +34,10 @@ export class CartComponent {
       this.updateMrp();
     })
   }
+  ngAfterViewInit(){
+    this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);
+  }
+
 
   increaseQuantity(sku_id:string){
     this.cartService.increaseQuantity(sku_id);
@@ -48,8 +54,7 @@ export class CartComponent {
         else if(this.cartItems[i].quantity===1){
           this._to_delete_sku = sku_id;
           this.to_delete_title = this.cartItems[i].product.title;
-          // this.removeModal.show();
-          this.displayModal = "block";
+          this.removeModal.show();
           return;
         }
         else{
@@ -62,14 +67,25 @@ export class CartComponent {
   }
 
   updateQuantity(sku_id:string,event:any){
+    if(event.target.value===""){
+      this.deleteItem(sku_id);
+      return;
+    }
     if(isNaN(event.target.value)){
       this.handleErrorToast("Not a valid number");
       return;
     }
+    
     if(parseInt(event.target.value)<=0){
+      if(parseInt(event.target.value)===0)
+      {
+        this.deleteItem(sku_id);
+        return;
+      }
       this.handleErrorToast("Invalid quantity");
       return;
     }
+
     this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
   }
 
@@ -81,8 +97,7 @@ export class CartComponent {
   }
 
   deleteItem(sku_id:string){
-    // this.removeModal.show();
-    this.displayModal = "block";
+    this.removeModal.show();
     this._to_delete_sku = sku_id;
     for(let i=0;i<this.cartItems.length;i++){
       if(this.cartItems[i].product.sku_id===sku_id){
@@ -92,10 +107,13 @@ export class CartComponent {
   }
 
   removeItem(){
-    // this.removeModal.hide();
-    this.displayModal = "none";
+    this.removeModal.hide();
     this.handleSuccessToast("Item removed successfully");
     this.cartService.removeItem(this._to_delete_sku);
+  }
+
+  clearCart(){
+    this.cartService.clearCart();
   }
 
   handleErrorToast(msg:string){
@@ -142,6 +160,16 @@ export class CartComponent {
     ele.setAttribute('download', 'download.tsv');
     ele.click();
     ele.remove();
-    this.cartService.setCart([]);
+    this.cartService.clearCart();
+    this.placedOrder = true;
+  }
+
+  reinitializeQuantity(sku_id:string,event:any){
+    for(let i=0;i<this.cartItems.length;i++){
+      if(this.cartItems[i].product.sku_id===sku_id){
+        event.target.value = this.cartItems[i].quantity;
+        return;
+      }
+    }
   }
 }

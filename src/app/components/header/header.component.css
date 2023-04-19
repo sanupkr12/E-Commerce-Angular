@@ -6,6 +6,10 @@
     width:2em;
 }
 
+.navbar-sticky{
+    z-index:100;
+}
+
 .display-none{
     display: none;
 }

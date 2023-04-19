@@ -17,7 +17,7 @@ html{
     width:3em;
 }
 
-.quantity-input:focus{
+input:focus{
     outline:none;
 }
 

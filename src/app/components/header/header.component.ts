@@ -50,7 +50,7 @@ export class HeaderComponent {
   updateItemCount(){
     let itemCount = 0;
     for(let i=0;i<this.cartItems.length;i++){
-      itemCount+=this.cartItems[i].quantity;
+      itemCount+=this.cartItems[i].quantity ? this.cartItems[i].quantity : 0;
     }
     this.totalItems = itemCount;
   }

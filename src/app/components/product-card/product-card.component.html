@@ -7,15 +7,15 @@
         </a>
     </div>
     <div class="card-body">
-        <h5 class="card-title fs-4 fw-light mb-0 text-muted text-wrapper">{{product.title}}</h5>
-        <p class="text-muted mb-1 text-wrapper">{{product.brand}}</p>
+        <h5 class="card-title fs-4 fw-light mb-0 text-muted text-wrapper">{{product.title | titlecase}}</h5>
+        <p class="text-muted mb-1 text-wrapper">{{product.brand | titlecase}}</p>
         <p class="card-subtitle mb-2">{{product.price | currency:'INR'}}</p>
         <p class="card-text text-wrapper">{{product.description}}</p>
         <div class="row" [ngClass]="{'d-none':quantity<=0}">
             <div class="col-6 col-sm-6 col-md-12 col-xl-6 pe-0">
                 <div class="input-group">
                     <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(product.sku_id)">-</button>
-                    <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em" (keyup)="updateQuantity(product.sku_id,$event)" value="{{quantity}}">
+                    <input type="text" class="border-0 border-top border-bottom text-center" style="width:3em" (keyup)="updateQuantity(product.sku_id,$event)" value="{{quantity}}" (blur)="reinitializeQuantity($event)">
                     <button class="btn btn-sm btn-warning" (click)="increaseQuantity(product.sku_id)">+</button>
                 </div>
             </div>

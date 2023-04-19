@@ -6,7 +6,6 @@ import { orderData } from '../../Interface/orderData';
 import { cartInterface } from '../../Interface/cartInterface';
 import { product } from '../../Interface/productInterface';
 import { ProductService } from '../../services/product.service';
-import * as $ from "jquery";
 // import { Toast } from 'bootstrap';
 import { errorOrder } from '../../Interface/errorOrderInterface';
 import { downloadOrder } from '../../Interface/downloadOrderInterface';
@@ -38,7 +37,7 @@ export class OrderUploadComponent {
   @ViewChild('orderFile',{static:true}) orderFile!:ElementRef<HTMLFormElement>;
   @ViewChild('successToast',{static:true}) successToastEl!:ElementRef<HTMLDivElement>;
   @ViewChild('errorToast',{static:true}) errorToastEl!:ElementRef<HTMLDivElement>;
-  @ViewChild('orderFile',{static:true}) orderFileEl!:ElementRef<HTMLDivElement>;
+  @ViewChild('orderFile',{static:true}) orderFileEl!:ElementRef;
   // successToast:Toast | null = null;
   // errorToast:Toast | null = null;
 
@@ -111,7 +110,7 @@ export class OrderUploadComponent {
   }
 
   previewOrder(){
-    $(this.orderFileEl.nativeElement).val("");
+    this.orderFileEl.nativeElement.value=null;
     if(this.errorList.length>0){
       this.previewItems = false;
       this.errorPreview = true;

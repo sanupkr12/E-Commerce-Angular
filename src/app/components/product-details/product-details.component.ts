@@ -4,8 +4,8 @@ import { CartService } from '../../services/cart.service';
 import { cartInterface } from '../../Interface/cartInterface';
 import { product as Product } from '../../Interface/productInterface';
 import { ProductService } from '../../services/product.service';
-import * as $ from 'jquery';
 import { ToastService } from '../../services/toast.service';
+declare var bootstrap :any;
 // import {Toast,Modal} from "bootstrap";
 @Component({
   selector: 'app-product-details',
@@ -20,9 +20,12 @@ export class ProductDetailsComponent {
   quantity:number = 0;
   success_message:string = "";
   error_message:string = "";
+  removeModal:any;
   constructor(private router:ActivatedRoute,private productService:ProductService,private cartService:CartService,private toastService:ToastService){
 
   }
+
+  @ViewChild('removeModal') removeModalEl!:ElementRef;
 
   ngOnInit(){
 
@@ -53,6 +56,10 @@ export class ProductDetailsComponent {
     });
     this.cartService.initializeCart();
     this.cartService.validateCart();
+  }
+
+  ngAfterViewInit() {
+    this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);
   }
 
   changeDisplayImage(event:any){
@@ -96,7 +103,7 @@ export class ProductDetailsComponent {
       return;
     }
     if(this.quantity===1){
-      // this.removeModal?.show();
+      this.removeModal?.show();
       return;
     }
     this.quantity-=1;
@@ -118,7 +125,7 @@ export class ProductDetailsComponent {
 
   removeItem(){
     this.quantity-=1;
-    // this.removeModal?.hide();
+    this.removeModal?.hide();
     this.handleSucessToast("Item removed successfully");
     this.cartService.removeItem(this.sku_id);
     // this.cartService.decreaseQuantity(this.sku_id);
@@ -151,6 +158,10 @@ export class ProductDetailsComponent {
       }
     }
     this.handleSucessToast("Quantity updated successfully");
+  }
+
+  reinitializeQuantity(event:any){
+    event.target.value = this.quantity;
   }
 
   handleErrorToast(msg:string){

@@ -1,7 +1,12 @@
 .cart-item-image{
-    aspect-ratio: 1;
+    height:15rem;
 }
 
 .empty-cart-box{
     min-height: 85vh;
+}
+
+.bill-details{
+    top:5rem;
+    z-index:99;
 }

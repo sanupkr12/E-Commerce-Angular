@@ -1,10 +1,6 @@
 <div class="container-fluid bg-light">
     <div class="row pt-3 mb-5">
         <div class="col-12">
-            <div class="row">
-
-
-            </div>
             <div class="row pt-3 no-gutters">
                 <div class="col-12 col-md-3 col-lg-2">
                     <div class="row">
@@ -14,7 +10,16 @@
                                     class="fa fa-solid fa-filter"></i></button>
                         </div>
                         <div class="accordion filter-accordion" id="accordionPanelsStayOpenExample">
-                            <p class="fs-5 fw-light">Filters</p>
+                            <div class="d-flex justify-content-between">
+                                <p class="fs-5 fw-light mb-0">Filters</p>
+                                <button (click)="resetFilter()" class="btn btn-sm mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="32" id="icon" viewBox="0 0 32 32" width="32"><defs><style>
+                                        .cls-1 {
+                                          fill: none;
+                                        }
+                                      </style></defs><path d="M22.5,9A7.4522,7.4522,0,0,0,16,12.792V8H14v8h8V14H17.6167A5.4941,5.4941,0,1,1,22.5,22H22v2h.5a7.5,7.5,0,0,0,0-15Z"/><path d="M26,6H4V9.171l7.4142,7.4143L12,17.171V26h4V24h2v2a2,2,0,0,1-2,2H12a2,2,0,0,1-2-2V18L2.5858,10.5853A2,2,0,0,1,2,9.171V6A2,2,0,0,1,4,4H26Z"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+                                </button>
+                            </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                                     <button class="accordion-button shadow-none bg-white text-dark" type="button"
@@ -28,12 +33,14 @@
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                                <label for="minPrice" class="form-label">Min</label>
                                                 <input type="text" class="form-control" placeholder="min"
-                                                    (keyup)="handleMinPrice($event)" value="{{priceFilter['min']}}">
+                                                    (keyup)="handleMinPrice($event)" value="{{priceFilter['min']}}" id="minPrice">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-1 mt-lg-0">
+                                                <label for="maxPrice" class="form-label">Max</label>
                                                 <input type="text" class="form-control" placeholder="max"
-                                                    (keyup)="handleMaxPrice($event)" value="{{priceFilter['max']}}">
+                                                    (keyup)="handleMaxPrice($event)" value="{{priceFilter['max']}}" id="maxPrice">
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +128,7 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3"
                             *ngFor="let item of (search ? searchProducts:products)"
                             [ngClass]="{'d-none': !isValidBrand(item.brand) || item.rating<ratingFilter || item.price<priceFilter.min || item.price>priceFilter.max}">
-                            <app-product-card [product]="item" [cart]="cartItems"></app-product-card>
+                            <app-product-card [product]="item" [cart]="cartItems" (removeItem)="removeItem($event)"></app-product-card>
                         </div>
                     </div>
                 </div>
@@ -208,3 +215,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
 </div>
+<div #removeModal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-solid fa-warning text-warning"></i> Remove item</h5>
+        </div>
+        <div class="modal-body">
+          Are you sure! you want to remove <span class="fw-bold">{{to_delete_title}}</span>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button #removeBtn type="button" class="btn btn-danger" (click)="deleteItem()" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>

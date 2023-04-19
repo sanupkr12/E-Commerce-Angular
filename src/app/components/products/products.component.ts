@@ -6,6 +6,7 @@ import { cartInterface } from '../../Interface/cartInterface';
 import { ActivatedRoute } from '@angular/router';
 import { priceInterface } from '../../Interface/priceInterface';
 import { ToastService } from '../../services/toast.service';
+declare var bootstrap:any;
 // import { Toast } from "bootstrap";
 @Component({
   selector: 'app-products',
@@ -23,13 +24,13 @@ export class ProductsComponent {
   brandFilters:string[] = [];
   success_message:string = "";
   error_message:string = "";
+  private _to_delete_sku:string="";
+  to_delete_title:string="";
+  removeModal:any;
   constructor(private productService: ProductService,private cartService:CartService,private router:ActivatedRoute,private toastService:ToastService){
 
   }
-
-
-  
-
+  @ViewChild('removeModal') removeModalEl!:ElementRef;
   ngOnInit(){
     this.products = this.cartService.productList;
     this.router.queryParams.subscribe((params)=>{
@@ -70,6 +71,10 @@ export class ProductsComponent {
     })
   }
 
+  ngAfterViewInit() {
+    this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);
+  }
+
   addSearchFilter(products:product[],query:string){
     if(query.length===0){
       return products;
@@ -95,6 +100,21 @@ export class ProductsComponent {
 
   decreaseQuantity(sku_id:string){
     this.cartService.decreaseQuantity(sku_id);
+  }
+
+  removeItem(event:any){
+    this._to_delete_sku = event.sku_id;
+    this.to_delete_title = event.title;
+    this.removeModal.show();
+  }
+
+  deleteItem(){
+    this.cartService.removeItem(this._to_delete_sku);
+    this.toastService.setToast({status:'success',message:'Item deleted successfully'});
+  }
+
+  resetFilter(){
+    this.cartService.resetSessionStorage();
   }
 
   updateQuantity(sku_id:string,event:any){
