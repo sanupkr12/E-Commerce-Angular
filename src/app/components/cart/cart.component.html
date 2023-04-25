@@ -1,4 +1,4 @@
-<div class="container-fluid bg-main mb-5">
+<div class="container-fluid bg-main mb-5 px-5">
     <div class="row pt-3" *ngIf="cartItems.length>0; else emptyCart">
         
         <div class="col-12 col-md-12 col-lg-8">
@@ -24,10 +24,10 @@
                             <p class="fs-5 fw-light mb-1">{{item.product.price | currency:'INR'}}</p>
                             <p class="product-description">{{item.product.description}}</p>
                             <div class="input-group w-auto">
-                                <button class="btn btn-warning" (click)="decreaseQuantity(item.product.sku_id)">-</button>
+                                <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(item.product.sku_id)">-</button>
                                 <input type="text" class="quantity-input border-0 border-top border-bottom text-center"
                                     (keyup)="updateQuantity(item.product.sku_id,$event)" value="{{item.quantity}}" (blur)="reinitializeQuantity(item.product.sku_id,$event)">
-                                <button class="btn btn-warning" (click)='increaseQuantity(item.product.sku_id)'>+</button>
+                                <button class="btn btn-sm btn-warning" (click)='increaseQuantity(item.product.sku_id)'>+</button>
                             </div>
                             <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{item.product.price * item.quantity | currency:'INR'}}</p>
                         </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-4">
-            <div class="card border-0 shadow-sm w-75 mx-auto sticky-top bill-details">
+            <div class="card border-0 shadow-sm sticky-top bill-details">
                 <div class="card-header">
                     <h4 class=" mb-1">Order Summary</h4>
                 </div>

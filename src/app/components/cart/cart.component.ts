@@ -33,12 +33,13 @@ export class CartComponent {
       this.cartItems = [...res];
       this.updateMrp();
     })
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    }) 
+    
   }
   ngAfterViewInit(){
+    // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    //     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    //     return new bootstrap.Tooltip(tooltipTriggerEl)
+    // }) 
     this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);
   }
 
