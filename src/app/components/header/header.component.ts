@@ -40,7 +40,6 @@ export class HeaderComponent {
     this.authService.getUser().subscribe((user)=>{
       this.username = user;
     })
-    this.cartItems = [...this.cartService.cartList];
     this.cartService.getCart().subscribe((res)=>{
       this.cartItems = [...res];
       this.updateItemCount();

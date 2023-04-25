@@ -34,7 +34,7 @@
                                 <a class="btn btn-primary fs-6 fw-light" routerLink="login" *ngIf="username.length === 0">Login</a>
                                 <div class="dropdown" *ngIf="username.length > 0">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{username}}
+                                        <i class="fa fa-solid fa-user pe-1"></i> {{username}}
                                       </button>
                                       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                         <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>

@@ -5,95 +5,38 @@ import { ProductService } from './product.service';
 import { UserService } from './user.service';
 import {product as ProductInterface} from "../Interface/productInterface";
 import { cartInterface as CartInterface } from '../Interface/cartInterface';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { priceInterface } from '../Interface/priceInterface';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+  private _cartItems = new BehaviorSubject<CartInterface[]>([]);
   userList:UserInterface[] = [];
   productList:ProductInterface[] = [];
   cartList:CartInterface[] = [];
-  cartItems = new Subject<CartInterface[]>;
-  cartLoaded = new Subject<boolean>;
-  rating:number = 0;
-  ratingFilter = new Subject<number>;
-  price:priceInterface = {} as priceInterface;
-  priceFilter = new Subject<priceInterface>;
-  brands:string[] = [];
-  brandFilter = new Subject<string[]>;
+
   constructor(private authService:AuthService,private userService:UserService,private productService:ProductService) { }
   ngOnInit(){
-    this.productService.getProducts().subscribe((products:any)=>{
-      this.productList = products.products;
+    this.productService.getProducts().subscribe((data:any)=>{
+      this.productList = data.products;
     })
   }
 
   setCart(res:CartInterface[]){
-    this.cartItems.next([...res]);
+    this._cartItems.next([...res]);
     this.cartList = [...res];
   }
 
   getCart(){
-    return this.cartItems.asObservable();
+    return this._cartItems.asObservable();
   }
 
-  setCartLoaded(flag:boolean){
-    this.cartLoaded.next(flag);
-  }
-  getCartLoaded(){
-    return this.cartLoaded.asObservable();
+  setFilter(filter:{})
+  {
+    sessionStorage.setItem('filter',JSON.stringify(filter));
   }
 
-  setRatingFilter(rating:number){
-    try{
-      let filter = JSON.parse(sessionStorage.getItem('filter')||'');
-      filter['rating'] = rating;
-      this.ratingFilter.next(rating);
-      sessionStorage.setItem('filter', JSON.stringify(filter));
-    }
-    catch(error){
-      this.initializeSessionStorage();
-    }
-  }
-
-  getRatingFilter(){
-    return this.ratingFilter.asObservable();
-  }
-
-  setPriceFilter(price:priceInterface){
-    try{
-      let filter = JSON.parse(sessionStorage.getItem('filter') || '');
-      filter['price'] = price;
-      this.price = price;
-      this.priceFilter.next(price);
-      sessionStorage.setItem('filter',JSON.stringify(filter));
-    }
-    catch(err){
-      this.initializeSessionStorage();
-    }
-  }
-
-  getPriceFilter(){
-    return this.priceFilter.asObservable();
-  }
-
-  setBrandFilter(brand:string[]){
-    try{
-      let filter = JSON.parse(sessionStorage.getItem('filter') || '');
-      this.brands = [...brand];
-      filter['brands'] = [...this.brands];
-      this.brandFilter.next(brand);
-      sessionStorage.setItem('filter',JSON.stringify(filter));
-    }
-    catch(err){
-      this.initializeSessionStorage();
-    }
-  }
-
-  getBrandFilter(){
-    return this.brandFilter.asObservable();
-  }
   addToCart(sku_id:string){
     const email = localStorage.getItem('email');
     let cart = JSON.parse(localStorage.getItem('cart') || '');
@@ -361,9 +304,21 @@ export class CartService {
       }
       else{
         let cartObj = JSON.parse(cart);
-        cartObj[email] = {...cartObj[email],...cartObj['untracked']};
-        cartObj['untracked'] = {};
-        localStorage.setItem('cart',JSON.stringify(cartObj));
+        if(!(email in cartObj))
+        {
+          if(email!="")
+          {
+            localStorage.setItem('cart',JSON.stringify({[email]:{...cartObj['untracked']},'untracked':{}}));
+          }
+          else{
+            localStorage.removeItem('email');
+          } 
+        }
+        else{
+          cartObj[email] = {...cartObj[email],...cartObj['untracked']};
+          cartObj['untracked'] = {};
+          localStorage.setItem('cart',JSON.stringify(cartObj));
+        }
       }
     }
     else{
@@ -388,6 +343,7 @@ export class CartService {
             }
           }
           if(!isValidUser){
+            console.log(isValidUser);
             localStorage.removeItem('email');
           }
         }
@@ -439,7 +395,7 @@ export class CartService {
             }
           }
           this.setCart(res);
-          this.setCartLoaded(true);
+          
         }
       }
       else{
@@ -448,55 +404,65 @@ export class CartService {
         }
         else{
           //do somthing with currently logged in user
-          let res:CartInterface[]= [];
-          for(let key in cart[email]){
-            let quantity:number = cart[email][key];
-            for(let i=0;i<productList.length;i++){
-              if(productList[i].sku_id === key){
-                res.push({product:{...productList[i]},'quantity':quantity});
-                break;
+          console.log(email);
+          if(!(email in cart)){
+            let res:CartInterface[]= [];
+            for(let key in cart['untracked']){
+              let quantity:number = cart['untracked'][key];
+              for(let i=0;i<productList.length;i++){
+                if(productList[i].sku_id === key){
+                  res.push({product:{...productList[i]},'quantity':quantity});
+                  break;
+                }
               }
             }
+            localStorage.setItem('cart',JSON.stringify({[email]:{...cart['untracked']},'untracked':{}}));
+            this.setCart([...res]);
           }
-          this.setCart(res);
-          this.setCartLoaded(true);
+          else{
+            let res:CartInterface[]= [];
+            for(let key in cart[email]){
+              let quantity:number = cart[email][key];
+              for(let i=0;i<productList.length;i++){
+                if(productList[i].sku_id === key){
+                  res.push({product:{...productList[i]},'quantity':quantity});
+                  break;
+                }
+              }
+            }
+            console.log(res);
+            this.setCart([...res]);
+          }
         }
       }
     })
-  }
-
-  resetSessionStorage(){
-    sessionStorage.setItem('filter',JSON.stringify({price:{min:0,max:10000000},rating:0,brands:[]}));
-    this.setRatingFilter(0);
-    this.setPriceFilter({min:0,max:1000000});
-    this.setBrandFilter([]);
   }
   
   initializeSessionStorage(){
     try{
       let filter = JSON.parse(sessionStorage.getItem('filter') || '');
-
       if(!filter){
-        sessionStorage.setItem('filter',JSON.stringify({price:{min:0,max:10000000},rating:0,brands:[]}));
-        this.setRatingFilter(0);
-        this.setPriceFilter({min:0,max:1000000});
-        this.setBrandFilter([]);
+        sessionStorage.setItem('filter',JSON.stringify({minPrice:0,maxPrice:10000000,rating:0,brands:[]}));
       } 
-      else{
-        this.rating = filter['rating'];
-        this.price = filter['price'];
-        this.brands = filter['brands'];
-        this.setRatingFilter(filter['rating']);
-        this.setPriceFilter(filter['price']);
-        this.setBrandFilter(filter['brands']);
-      }
     }catch(err){
-      sessionStorage.setItem('filter',JSON.stringify({price:{min:0,max:10000000},rating:0,brands:[]}));
-      this.setRatingFilter(0);
-      this.setPriceFilter({min:0,max:1000000});
-      this.setBrandFilter([]);
+      sessionStorage.setItem('filter',JSON.stringify({minPrice:0,maxPrice:10000000,rating:0,brands:[]}));
     }
     
+  }
+
+  getFilter(){
+    try{
+      let filterObj = JSON.parse(sessionStorage.getItem('filter') || '');
+      if(!filterObj){
+        return {minPrice:0,maxPrice:10000000,rating:0,brands:[]};
+      }
+      else{
+        return filterObj;
+      }
+    }
+    catch(err){
+      return {minPrice:0,maxPrice:10000000,rating:0,brands:[]};
+    }
   }
 }
 
@@ -504,10 +470,10 @@ export class CartService {
 // cart:{
 //   "email1":{"item sku":1,"item sku2":2},
 //   "email2":{"item sku":4,"item sku2":5},
-//   "untraced Items":{"item sku1":2,"item sku2":5}
+//   "untracked Items":{"item sku1":2,"item sku2":5}
 // }
 
 //Session Storage structure
-//filter:{price:{min:0,max:10000},
+//filter:{minPrice:0,maxPrice:1000000},
 //        rating:number,
 //        brand:string[]}

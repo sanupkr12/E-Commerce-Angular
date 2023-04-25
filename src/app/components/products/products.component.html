@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="row pt-3 no-gutters">
                 <div class="col-12 col-md-3 col-lg-2">
-                    <div class="row">
+                    <div class="sticky-top filter-box">
                         <div>
                             <button class="btn btn-primary filter-btn" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filters <i
@@ -12,12 +12,8 @@
                         <div class="accordion filter-accordion" id="accordionPanelsStayOpenExample">
                             <div class="d-flex justify-content-between">
                                 <p class="fs-5 fw-light mb-0">Filters</p>
-                                <button (click)="resetFilter()" class="btn btn-sm mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="32" id="icon" viewBox="0 0 32 32" width="32"><defs><style>
-                                        .cls-1 {
-                                          fill: none;
-                                        }
-                                      </style></defs><path d="M22.5,9A7.4522,7.4522,0,0,0,16,12.792V8H14v8h8V14H17.6167A5.4941,5.4941,0,1,1,22.5,22H22v2h.5a7.5,7.5,0,0,0,0-15Z"/><path d="M26,6H4V9.171l7.4142,7.4143L12,17.171V26h4V24h2v2a2,2,0,0,1-2,2H12a2,2,0,0,1-2-2V18L2.5858,10.5853A2,2,0,0,1,2,9.171V6A2,2,0,0,1,4,4H26Z"/><rect class="cls-1" data-name="&lt;Transparent Rectangle&gt;" height="32" id="_Transparent_Rectangle_" width="32"/></svg>
+                                <button (click)="resetFilter()" class="btn btn-sm mb-2 btn-outline-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reset filter">
+                                    <i class="fa fa-solid fa-filter-circle-xmark"></i>
                                 </button>
                             </div>
                             <div class="accordion-item">
@@ -33,14 +29,14 @@
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                                                <label for="minPrice" class="form-label">Min</label>
+                                                <label for="minPrice" class="form-label opacity-50">Min</label>
                                                 <input type="text" class="form-control" placeholder="min"
-                                                    (keyup)="handleMinPrice($event)" value="{{priceFilter['min']}}" id="minPrice">
+                                                    (keyup)="handleMinPrice($event)" value="{{filter.minPrice}}" id="minPrice">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-1 mt-lg-0">
-                                                <label for="maxPrice" class="form-label">Max</label>
+                                                <label for="maxPrice" class="form-label opacity-50">Max</label>
                                                 <input type="text" class="form-control" placeholder="max"
-                                                    (keyup)="handleMaxPrice($event)" value="{{priceFilter['max']}}" id="maxPrice">
+                                                    (keyup)="handleMaxPrice($event)" value="{{filter.maxPrice}}" id="maxPrice">
                                             </div>
                                         </div>
                                     </div>
@@ -55,30 +51,30 @@
                                         Rating
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapsed"
                                     aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="rating" value="1"
-                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
+                                                (change)="addRatingFilter($event)" [checked]="filter.rating===1">
                                             <label class="form-check-label">1 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="rating" value="2"
-                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
+                                                (change)="addRatingFilter($event)" [checked]="filter.rating===2">
                                             <label class="form-check-label">2 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="rating" value="3"
-                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
+                                                (change)="addRatingFilter($event)" [checked]="filter.rating===3">
                                             <label class="form-check-label">3 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="rating" value="4"
-                                                (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
+                                                (change)="addRatingFilter($event)" [checked]="filter.rating===4">
                                             <label class="form-check-label">4 <i
                                                     class="fa fa-solid fa-star text-warning"></i> & above</label>
                                         </div>
@@ -94,15 +90,17 @@
                                         Brands
                                     </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapsed"
                                     aria-labelledby="panelsStayOpen-headingThree">
-                                    <div class="accordion-body" *ngFor="let item of brands">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="brand"
-                                                value="{{item}}" (change)="addBrandFilter($event)"
-                                                [checked]="brandFilters.indexOf(item.toLowerCase())>-1">
-                                            <label class="form-check-label">{{item | titlecase}}</label>
-                                        </div>
+                                    <div class="accordion-body">
+                                        <ng-container *ngFor="let item of brands">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="brand"
+                                                    value="{{item}}" (change)="addBrandFilter($event)"
+                                                    [checked]="filter.brands.indexOf(item.toLowerCase())>-1">
+                                                <label class="form-check-label">{{item | titlecase}}</label>
+                                            </div>
+                                        </ng-container>  
                                     </div>
                                 </div>
                             </div>
@@ -111,25 +109,42 @@
                 </div>
                 <div class="col-12 col-md-9 col-lg-10 mt-3 mt-md-0">
                     <div class="row">
-                        <div>
-                            <div
-                                class="d-flex align-items-center justify-content-start justify-content-sm-end me-3 mb-3">
-                                <span class="fs-6 me-2">Sort By:</span>
-                                <div>
-                                    <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
-                                        <option value="rel" selected>Relevance</option>
-                                        <option value="phtl">Price : high to low</option>
-                                        <option value="plth">Price : low to high</option>
-                                        <option value="rhtl">Rating : high to low</option>
-                                    </select>
+                        <div class="col-12">
+                            <div class="row me-3 mb-1">
+                                <div class="col-8">
+                                    <ng-container *ngFor="let item of filter.brands">
+                                        <p class="bg-warning me-2 rounded-pill px-2 d-inline-block">{{item | slice:0:12}}{{item.length>12?"...":""}}<i class="ms-2 text-danger rounded-circle fa fa-light fa-xmark hover-pointer" (click)="removeBrandFilter(item)"></i></p>
+                                    </ng-container>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex flex-row justify-content-end align-items-center mb-2">
+                                        <span class="fs-6 me-2">Sort By:</span>
+                                        <div>
+                                            <select name="sort" class="form-select shadow-none" (change)="handleSort($event)">
+                                                <option value="rel" selected>Relevance</option>
+                                                <option value="phtl">Price : high to low</option>
+                                                <option value="plth">Price : low to high</option>
+                                                <option value="rhtl">Rating : high to low</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3"
-                            *ngFor="let item of (search ? searchProducts:products)"
-                            [ngClass]="{'d-none': !isValidBrand(item.brand) || item.rating<ratingFilter || item.price<priceFilter.min || item.price>priceFilter.max}">
-                            <app-product-card [product]="item" [cart]="cartItems" (removeItem)="removeItem($event)"></app-product-card>
-                        </div>
+                        
+                        <ng-container *ngIf="(search?searchProducts.length:products.length)>0; else productNotFound">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3"
+                                *ngFor="let item of (search ? searchProducts:products)"
+                                [ngClass]="{'d-none': !isValidBrand(item.brand) || item.rating<filter.rating || item.price<filter.minPrice || item.price>filter.maxPrice}">
+                                <app-product-card [product]="item" [cart]="cartItems" (removeItem)="removeItem($event)"></app-product-card>
+                            </div>
+                        </ng-container>
+                        <ng-template #productNotFound>
+                            <div class="product-not-found d-flex justify-content-center align-items-center flex-column">
+                                <svg class="opacity-50" xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 121.7 122.88"><path d="M53.62 0c14.81 0 28.21 6 37.91 15.7 9.7 9.7 15.7 23.11 15.7 37.91 0 10.83-3.21 20.91-8.74 29.35l23.2 25.29-16 14.63-22.37-24.62a53.359 53.359 0 01-29.7 8.98c-14.81 0-28.21-6-37.91-15.7C6 81.82 0 68.42 0 53.62 0 38.81 6 25.41 15.7 15.7 25.41 6 38.81 0 53.62 0zm8.01 38.91a4.747 4.747 0 016.76-.02 4.868 4.868 0 01.02 6.83l-8.17 8.29 8.18 8.3c1.85 1.88 1.82 4.92-.05 6.79-1.88 1.87-4.9 1.87-6.74-.01l-8.13-8.24-8.14 8.26a4.747 4.747 0 01-6.76.02 4.868 4.868 0 01-.02-6.83l8.17-8.3-8.18-8.3c-1.85-1.88-1.82-4.92.06-6.79 1.88-1.87 4.9-1.87 6.74.01l8.13 8.24 8.13-8.25zM87.3 19.93C78.68 11.31 66.77 5.98 53.62 5.98c-13.15 0-25.06 5.33-33.68 13.95-8.63 8.62-13.96 20.53-13.96 33.69 0 13.15 5.33 25.06 13.95 33.68 8.62 8.62 20.53 13.95 33.68 13.95 13.16 0 25.06-5.33 33.68-13.95 8.62-8.62 13.95-20.53 13.95-33.68.01-13.16-5.32-25.07-13.94-33.69z" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+                                <p class="fs-4 opacity-75">Product Not Found</p>
+                            </div>  
+                        </ng-template>
                     </div>
                 </div>
             </div>
@@ -149,39 +164,39 @@
                 <legend>Price:</legend>
                 <div class="col-5">
                     <input type="text" class="form-control" placeholder="min" (keyup)="handleMinPrice($event)"
-                        value="{{priceFilter.min}}">
+                        value="{{filter.minPrice}}">
                 </div>
                 <div class="col-2">
                     <p class="text-center">to</p>
                 </div>
                 <div class="col-5">
                     <input type="text" class="form-control" placeholder="max" (keyup)="handleMaxPrice($event)"
-                        value="{{priceFilter.max}}">
+                        value="{{filter.maxPrice}}">
                 </div>
                 <div class="col-12 mt-3">
                     <form>
                         <legend>Rating:</legend>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="rating" value="1"
-                                (change)="addRatingFilter($event)" [checked]="ratingFilter===1">
+                                (change)="addRatingFilter($event)" [checked]="filter.rating===1">
                             <label class="form-check-label">1 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="rating" value="2"
-                                (change)="addRatingFilter($event)" [checked]="ratingFilter===2">
+                                (change)="addRatingFilter($event)" [checked]="filter.rating===2">
                             <label class="form-check-label">2 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="rating" value="3"
-                                (change)="addRatingFilter($event)" [checked]="ratingFilter===3">
+                                (change)="addRatingFilter($event)" [checked]="filter.rating===3">
                             <label class="form-check-label">3 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="rating" value="4"
-                                (change)="addRatingFilter($event)" [checked]="ratingFilter===4">
+                                (change)="addRatingFilter($event)" [checked]="filter.rating===4">
                             <label class="form-check-label">4 <i class="fa fa-solid fa-star text-warning"></i> &
                                 above</label>
                         </div>
@@ -192,7 +207,7 @@
                     <div *ngFor="let item of brands">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" name="brand" value="{{item}}"
-                                (change)="addBrandFilter($event)">
+                                (change)="addBrandFilter($event)" [checked]="filter.brands.indexOf(item.toLowerCase())>-1">
                             <label class="form-check-label">{{item | titlecase}}</label>
                         </div>
                     </div>

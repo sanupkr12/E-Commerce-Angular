@@ -129,8 +129,8 @@
           Are you sure! you want to remove <span class="fw-bold">{{to_delete_title}}</span>?
         </div>
         <div class="modal-footer">
+            <button #removeBtn type="button" class="btn btn-danger" (click)="removeItem()" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button #removeBtn type="button" class="btn btn-danger" (click)="removeItem()" data-bs-toggle="modal" data-bs-target="#exampleModal">Remove</button>
         </div>
       </div>
     </div>

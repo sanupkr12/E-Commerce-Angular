@@ -19,29 +19,23 @@ export class ProductsComponent {
   searchProducts:product[] = [];
   search:boolean = false;
   brands:string[]=[];
-  ratingFilter:number=0;
-  priceFilter:priceInterface = {} as priceInterface;
-  brandFilters:string[] = [];
   success_message:string = "";
   error_message:string = "";
   private _to_delete_sku:string="";
   to_delete_title:string="";
   removeModal:any;
+  filter = {
+    minPrice:0,
+    maxPrice:1000000,
+    rating:0,
+    brands:[] as string[]
+  }
   constructor(private productService: ProductService,private cartService:CartService,private router:ActivatedRoute,private toastService:ToastService){
 
   }
   @ViewChild('removeModal') removeModalEl!:ElementRef;
   ngOnInit(){
     this.products = this.cartService.productList;
-    this.router.queryParams.subscribe((params)=>{
-      if(params.hasOwnProperty('search')){
-        this.search = true;
-        this.searchProducts = this.addSearchFilter(this.products,params['search']);
-      }
-      else{
-        this.search = false;
-      }
-    });
     this.productService.getProducts().subscribe((products:any)=>{
         this.products = products['products'];
         this.products.map((product)=>{
@@ -49,26 +43,30 @@ export class ProductsComponent {
         })
         this.brands = [...new Set(this.brands)];
     })
-    this.products = this.productService.productList;
+    this.router.queryParams.subscribe((params)=>{
+      if(params.hasOwnProperty('search')){
+        this.search = true;
+        this.filter = {
+          minPrice:0,
+          maxPrice:1000000,
+          rating:0,
+          brands:[]
+        }
+        this.cartService.setFilter(this.filter);
+        this.searchProducts = this.addSearchFilter(this.products,params['search']);
+      }
+      else{
+        this.search = false;
+      }
+    });
     this.brands = this.productService.brands;
     this.cartService.initializeCart();
     this.cartService.validateCart();
-    this.cartItems = this.cartService.cartList;
     this.cartService.getCart().subscribe((res)=>{
       this.cartItems = [...res];
     });
-    this.ratingFilter = this.cartService.rating;
-    this.cartService.getRatingFilter().subscribe((rating)=>{
-      this.ratingFilter = rating;
-    })
-    this.priceFilter = this.cartService.price;
-    this.cartService.getPriceFilter().subscribe((price:priceInterface)=>{
-      this.priceFilter = price;
-    });
-    this.brandFilters = [...this.cartService.brands];
-    this.cartService.getBrandFilter().subscribe((res)=>{
-      this.brandFilters = [...res];
-    })
+
+    this.filter = this.cartService.getFilter();
   }
 
   ngAfterViewInit() {
@@ -88,6 +86,13 @@ export class ProductsComponent {
       }
     }
     return resultProducts;
+  }
+  removeBrandFilter(brand:string){
+    if(this.filter.brands.indexOf(brand)>-1)
+    {
+      this.filter.brands = this.filter.brands.filter((item)=>item!=brand);
+    }
+    this.cartService.setFilter(this.filter);
   }
 
   addProduct(sku_id:string){
@@ -114,7 +119,13 @@ export class ProductsComponent {
   }
 
   resetFilter(){
-    this.cartService.resetSessionStorage();
+    this.filter = {
+      minPrice:0,
+      maxPrice:1000000,
+      rating:0,
+      brands:[]
+    }
+    this.cartService.setFilter(this.filter);
   }
 
   updateQuantity(sku_id:string,event:any){
@@ -127,18 +138,19 @@ export class ProductsComponent {
 
   addBrandFilter(event:any){
     if(event.target.checked){
-      if(this.brandFilters.indexOf(event.target.value.toLowerCase().trim())===-1){
-        this.brandFilters.push(event.target.value.toLowerCase().trim());
+      if(this.filter.brands.indexOf(event.target.value.toLowerCase().trim())===-1){
+        this.filter.brands.push(event.target.value.toLowerCase().trim());
       }
     }
     else{
-      this.brandFilters = this.brandFilters.filter((brand)=>brand!=event.target.value.toLowerCase())
+      this.filter.brands = this.filter.brands.filter((brand)=>brand!=event.target.value.toLowerCase());
     }
-    this.cartService.setBrandFilter(this.brandFilters);
+    this.cartService.setFilter(this.filter);
   }
 
   addRatingFilter(event:any){
-    this.cartService.setRatingFilter(parseInt(event.target.value));
+    this.filter.rating = parseInt(event.target.value);
+    this.cartService.setFilter(this.filter);
   }
 
   handleSort(event:any){
@@ -192,34 +204,38 @@ export class ProductsComponent {
   handleMinPrice(event:any){
     let value = event.target.value;
     if(isNaN(value)){
+      event.target.value = this.filter.minPrice;
       this.handleErrorToast("Not a valid number");
       return;
     }
-    if(parseInt(value)>this.priceFilter.max){
+    if(parseInt(value)>this.filter.maxPrice){
       this.handleErrorToast("min price must be less than max price");
+      event.target.value = this.filter.minPrice;
       return;
     }
-    this.priceFilter = {min:parseInt(value),max:this.priceFilter.max};
-    this.cartService.setPriceFilter(this.priceFilter);
+    this.filter.minPrice = parseInt(value);
+    this.cartService.setFilter(this.filter);
   }
 
   handleMaxPrice(event:any){
     let value = event.target.value;
     if(isNaN(value)){
+      event.target.value = this.filter.maxPrice;
       this.handleErrorToast("Not a valid number");
       return;
     }
-    if(this.priceFilter.min>parseInt(value)){
+    if(this.filter.minPrice>parseInt(value)){
+      event.target.value= this.filter.maxPrice;
       this.handleErrorToast("min price must be less than max price");
       return;
     }
-    this.priceFilter = {min:this.priceFilter.min,max:parseInt(value)};
-    this.cartService.setPriceFilter(this.priceFilter);
+    this.filter.maxPrice = parseInt(value);
+    this.cartService.setFilter(this.filter);
   }
 
   isValidBrand(item:string){
-    if(this.brandFilters.length>0){
-      if(this.brandFilters.indexOf(item.toLowerCase())===-1){
+    if(this.filter.brands.length>0){
+      if(this.filter.brands.indexOf(item.toLowerCase())===-1){
         return false;
       }
       else{
@@ -233,19 +249,11 @@ export class ProductsComponent {
   handleErrorToast(event:any){
     this.error_message = event;
     this.toastService.setToast({status:'error',message:event});
-    // this.successToast?.hide();
-    // if(this.errorToast!=null){
-    //   this.errorToast.show();
-    // }
   }
 
   handleSucessToast(event:any){
     this.success_message = event;
     this.toastService.setToast({status:'success',message:event});
-    // this.errorToast?.hide();
-    // if(this.successToast!=null){
-    //   this.successToast.show();
-    // }
   }
   
 }

@@ -3,7 +3,7 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="d-flex">
                 <input #orderFile type="file" name="orderFile" class="form-control me-3" (change)="handleFileUpload($event)" accept=".tsv">
-                <button class="btn btn-primary" (click)="previewOrder()">Preview</button>
+                <button class="btn btn-primary" appButton (click)="previewOrder()">Preview</button>
             </div>
         </div>
         <div class="offset-md-6 offset-lg-8"></div>

@@ -10,6 +10,15 @@
     display:block;
 }
 
+.product-not-found{
+    min-height:70vh;
+}
+
+.filter-box{
+    top:5rem;
+    z-index:99;
+}
+
 @media (max-width:768px){
     .filter-btn{
         display:block;

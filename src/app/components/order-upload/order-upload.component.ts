@@ -10,6 +10,7 @@ import { ProductService } from '../../services/product.service';
 import { errorOrder } from '../../Interface/errorOrderInterface';
 import { downloadOrder } from '../../Interface/downloadOrderInterface';
 import { ArrayData } from 'ngx-papaparse/lib/interfaces/unparse-data';
+import { ToastService } from 'src/app/services/toast.service';
 declare global {
   interface Navigator {
       msSaveBlob?: (blob: any, defaultName?: string) => string
@@ -30,11 +31,10 @@ export class OrderUploadComponent {
   fileResult:any;
   errorList:errorOrder[] = [];
   errorPreview:boolean = false;
-  constructor(private cartService:CartService,private papa:Papa,private productService:ProductService){
+  constructor(private cartService:CartService,private papa:Papa,private productService:ProductService,private toastService:ToastService){
 
   }
 
-  @ViewChild('orderFile',{static:true}) orderFile!:ElementRef<HTMLFormElement>;
   @ViewChild('successToast',{static:true}) successToastEl!:ElementRef<HTMLDivElement>;
   @ViewChild('errorToast',{static:true}) errorToastEl!:ElementRef<HTMLDivElement>;
   @ViewChild('orderFile',{static:true}) orderFileEl!:ElementRef;
@@ -46,7 +46,6 @@ export class OrderUploadComponent {
     // this.errorToast = new Toast(this.errorToastEl.nativeElement,{});
     this.cartService.initializeCart();
     this.cartService.validateCart();
-    this.cartItems = this.cartService.cartList;
     this.productService.getProducts().subscribe((data:any)=>{
       this.productList = data.products;
     })
@@ -233,18 +232,10 @@ export class OrderUploadComponent {
   }
 
   handleErrorToast(msg:string){
-    // this.error_message = msg;
-    // this.successToast?.hide();
-    // if(this.errorToast!=null){
-    //   this.errorToast.show();
-    // }
+    this.toastService.setToast({status: "error", message: msg});
   }
 
   handleSucessToast(msg:string){
-    // this.success_message = msg;
-    // this.errorToast?.hide();
-    // if(this.successToast!=null){
-    //   this.successToast.show();
-    // }
+    this.toastService.setToast({status: "success", message: msg});
   }
 }

@@ -19,9 +19,6 @@
                     <button class="btn btn-sm btn-warning" (click)="increaseQuantity(product.sku_id)">+</button>
                 </div>
             </div>
-            <div class="col-6 col-sm-6 col-md-12 col-xl-6 mt-1 mt-xl-0 text-end text-md-start text-xl-end pe-1 pe-md-0 pe-lg-1">
-                <a class="btn btn-sm btn-dark px-2 px-md-1 px-lg-2" routerLink="/cart" target="_self" >GO TO CART</a>
-            </div>
         </div>
         <button class="btn btn-sm btn-dark" (click)="addProduct(product.sku_id)" [ngClass]="{'d-none':quantity>0}">ADD TO CART</button>
     </div>

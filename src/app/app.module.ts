@@ -18,6 +18,8 @@ import { ProductService } from './services/product.service';
 import { CartService } from './services/cart.service';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ButtonDirective } from './directives/button.directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ToastComponent } from './components/toast/toast.component';
     OrderUploadComponent,
     LoginComponent,
     ProductCardComponent,
-    ToastComponent
+    ToastComponent,
+    PageNotFoundComponent,
+    ButtonDirective
   ],
   imports: [
     BrowserModule,

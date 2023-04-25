@@ -42,7 +42,6 @@ export class ProductCardComponent {
     this.toastService.setToast({status:'success',message:"Product added successfully"})
     this.quantity = 1;
     this.cartService.addToCart(sku_id);
-    this.cart.push({product:this.product,quantity:this.quantity});
   }
 
   increaseQuantity(sku_id:string){
@@ -89,8 +88,13 @@ export class ProductCardComponent {
       this.toastService.setToast({status:'error',message:"Invalid quantity"});
       return;
     }
-    if(parseInt(event.target.value))
+    if(parseInt(event.target.value)<=0)
     {
+      if(parseInt(event.target.value)===0)
+      {
+        this.removeItem.emit({sku_id,title:this.product.title});
+        return;
+      }
       this.toastService.setToast({status:'error',message:"Invalid quantity"});
       return;
     }
@@ -102,6 +106,7 @@ export class ProductCardComponent {
         break;
       }
     }
+    this.toastService.setToast({status:'success',message:"Quantity updated successfully"});
     this.cartService.setCart(this.cart);
   }
 

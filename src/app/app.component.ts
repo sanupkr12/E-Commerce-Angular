@@ -18,14 +18,9 @@ export class AppComponent {
   productList:ProductInterface[] = [];
   
   constructor(private userService:UserService,private authService:AuthService,private cartService:CartService,private productService:ProductService){
-    
-  }
-
-  ngOnInit() {
-    this.cartService.setCartLoaded(false);
     this.cartService.initializeCart();
     this.cartService.validateCart();
     this.cartService.populateCart();
     this.cartService.initializeSessionStorage();
-  }; 
+  } 
 }

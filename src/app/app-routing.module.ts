@@ -6,6 +6,7 @@ import { OrderUploadComponent } from './components/order-upload/order-upload.com
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsComponent } from './components/products/products.component';
 import { LoginGuardService } from './services/login-guard.service';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 const routes: Routes = [
   {
     path:'',
@@ -31,6 +32,14 @@ const routes: Routes = [
     path:'login',
     component:LoginComponent,
     canActivate:[LoginGuardService]
+  },
+  {
+    path:'not-found',
+    component:PageNotFoundComponent
+  },
+  {
+    path:'**',
+    component:PageNotFoundComponent
   }
 ];
 

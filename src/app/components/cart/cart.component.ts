@@ -6,6 +6,7 @@ import { cartInterface as CartInterface } from '../../Interface/cartInterface';
 import { ToastService } from '../../services/toast.service';
 import { Papa } from 'ngx-papaparse';
 declare var bootstrap: any;
+declare var $:any;
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -27,12 +28,15 @@ export class CartComponent {
   ngOnInit(){
     this.cartService.initializeCart();
     this.cartService.validateCart();
-    this.cartItems = this.cartService.cartList;
     this.updateMrp();
     this.cartService.getCart().subscribe((res)=>{
       this.cartItems = [...res];
       this.updateMrp();
     })
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    }) 
   }
   ngAfterViewInit(){
     this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);

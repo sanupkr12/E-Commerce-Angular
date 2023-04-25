@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { cartInterface } from '../../Interface/cartInterface';
 import { product as Product } from '../../Interface/productInterface';
@@ -21,7 +21,7 @@ export class ProductDetailsComponent {
   success_message:string = "";
   error_message:string = "";
   removeModal:any;
-  constructor(private router:ActivatedRoute,private productService:ProductService,private cartService:CartService,private toastService:ToastService){
+  constructor(private router:ActivatedRoute,private navigationRouter:Router,private productService:ProductService,private cartService:CartService,private toastService:ToastService){
 
   }
 
@@ -32,7 +32,6 @@ export class ProductDetailsComponent {
     this.router.params.subscribe(params =>{
         this.sku_id = params['sku_id'];
     });
-    this.cart = this.cartService.cartList;
     this.cartService.getCart().subscribe((res:cartInterface[])=>{
       this.cart = [...res];
       for(let i=0;i<res.length;i++){
@@ -42,9 +41,11 @@ export class ProductDetailsComponent {
       }
     })
     this.productService.getProducts().subscribe((products:any)=>{
+      let isValidSku = false;
         products['products'].map((item:Product)=>{
           if(item.sku_id === this.sku_id){
             this.product = item;
+            isValidSku = true;
             this.display_image = item.thumbnail;
             for(let i=0;i<this.cart.length;i++){
               if(this.cart[i].product.sku_id===this.sku_id){
@@ -53,6 +54,9 @@ export class ProductDetailsComponent {
             }
           }
         });
+        if(!isValidSku){
+          this.navigationRouter.navigate(['/not-found']);
+        }
     });
     this.cartService.initializeCart();
     this.cartService.validateCart();
@@ -140,11 +144,21 @@ export class ProductDetailsComponent {
   }
 
   updateQuantity(sku_id:string,event:any){
+    if(event.target.value === "")
+    {
+      this.removeModal.show();
+      return;
+    }
     if(isNaN(event.target.value)){
       this.handleErrorToast("Invalid quantity");
       return;
     }
     if(parseInt(event.target.value)<=0){
+      if(parseInt(event.target.value)===0)
+      {
+        this.removeModal.show();
+        return;
+      }
       this.handleErrorToast("Invalid quantity");
       return;
     }
