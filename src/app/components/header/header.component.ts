@@ -1,4 +1,4 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { Input } from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -11,13 +11,14 @@ import { product } from '../../Interface/productInterface';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
   username:string = "";
   userlist:UserInterface[] = [];
   cartItems:cartInterface[] = [];
   totalItems:number = 0;
+  @ViewChild('searchInput',{static:false}) searchInputRef!:ElementRef;
   constructor(private authService:AuthService,private userService:UserService,private cartService:CartService,private router:Router){
   }
 
@@ -67,6 +68,7 @@ export class HeaderComponent {
 
   handleSearch(form:any){
     this.router.navigate(['/products'],{queryParams:{search:form.search}});
+    this.searchInputRef.nativeElement.value = "";
   }
 
 }

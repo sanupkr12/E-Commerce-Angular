@@ -12,7 +12,7 @@
                         <form #searchForm="ngForm" (ngSubmit)="handleSearch(searchForm.value)">
                             <div class="input-group input-box">
                                 <input type="text" placeholder="Search Products..."
-                                class="form-control form-control-sm p-2 shadow-none fs-6 fw-light border-right-none" name="search" ngModel>
+                                class="form-control form-control-sm p-2 shadow-none fw-light border-right-none" name="search" ngModel #searchInput>
                                 <button class="btn btn-sm btn-primary px-3" type="submit"><i class="fa fa-solid fa-search"></i></button>
                             </div>
                         </form>

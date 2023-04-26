@@ -19,7 +19,7 @@ declare global {
 @Component({
   selector: 'app-order-upload',
   templateUrl: './order-upload.component.html',
-  styleUrls: ['./order-upload.component.css']
+  styleUrls: ['./order-upload.component.scss']
 })
 export class OrderUploadComponent {
   orders:cartInterface[]=[];
