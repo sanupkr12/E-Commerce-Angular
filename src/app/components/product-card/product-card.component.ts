@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { cartInterface } from '../../Interface/cartInterface';
-import {product as ProductInterface} from '../../Interface/productInterface';
-import { ToastService } from '../../services/toast.service';
+import { CartService } from '../../common/services/cart.service';
+import { cartInterface } from '../../common/interfaces/cart.types';
+import { ProductInterface} from '../../common/interfaces/product.types';
+import { ToastService } from '../../common/services/toast.service';
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss']
 })
 export class ProductCardComponent {
-  quantity:number = 0;
+  public quantity:number = 0;
   @Input() product:ProductInterface = {} as ProductInterface;
   @Input() cart:cartInterface[] = [];
   @Output() removeItem:EventEmitter<any>= new EventEmitter();
@@ -62,8 +62,6 @@ export class ProductCardComponent {
       this.toastService.setToast({status:'error',message:"Invalid quantity"});
       return;
     }
-    
-    // this.cartService.decreaseQuantity(sku_id);
     for(let i=0;i<this.cart.length;i++){
       if(this.cart[i].product.sku_id===sku_id){
         if(this.cart[i].quantity===1){

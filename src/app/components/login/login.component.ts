@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { userForm } from '../../model/userForm.model';
-import { UserService } from '../../services/user.service';
+import { UserFormInterface } from '../../common/interfaces/user-form.types';
+import { UserService } from '../../common/services/user.service';
 import {Router} from "@angular/router"
-import { UserInterface } from '../../Interface/userInterface';
-import { AuthService } from '../../services/auth.service';
-import { CartService } from '../../services/cart.service';
+import { UserInterface } from '../../common/interfaces/user.types';
+import { AuthService } from '../../common/services/auth.service';
+import { CartService } from '../../common/services/cart.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  userlist:UserInterface[] = [];
-  errorMessage:string = '';
+  public userlist:UserInterface[] = [];
+  public errorMessage:string = '';
   constructor(private router:Router,private userService:UserService,private authService:AuthService,private cartService:CartService){
     
   }
@@ -29,7 +29,7 @@ export class LoginComponent {
     })
   }
 
-  handleLogin(formData:userForm){
+  handleLogin(formData:UserFormInterface){
     let email = formData.email;
     let password = formData.password;
     this.userlist.map((user)=>{

@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { OrderUploadComponent } from './components/order-upload/order-upload.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsComponent } from './components/products/products.component';
-import { LoginGuardService } from './services/login-guard.service';
+import { LoginGuardService } from './common/services/login-guard.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 const routes: Routes = [
   {

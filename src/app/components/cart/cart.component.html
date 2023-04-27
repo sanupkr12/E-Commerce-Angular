@@ -21,7 +21,7 @@
                                     class="fa fa-solid fa-trash fs-6 mt-2"></i></button>
                             <p class="fs-4 mb-0 fw-bold">{{item.product.title | titlecase}}</p>
                             <p class="fs-5 text-muted mb-0">{{item.product.brand}}</p>
-                            <p class="fs-5 fw-light mb-1">{{item.product.price | currency:'INR'}}</p>
+                            <p class="fs-6 fw-light mb-1">{{item.product.price | currency:'INR'}}</p>
                             <p class="product-description text-wrapper">{{item.product.description}}</p>
                             <div class="input-group w-auto">
                                 <button class="btn btn-sm btn-warning" (click)="decreaseQuantity(item.product.sku_id)">-</button>
@@ -29,7 +29,7 @@
                                     (keyup)="updateQuantity(item.product.sku_id,$event)" value="{{item.quantity}}" (blur)="reinitializeQuantity(item.product.sku_id,$event)">
                                 <button class="btn btn-sm btn-warning" (click)='increaseQuantity(item.product.sku_id)'>+</button>
                             </div>
-                            <p class="fs-5 fw-normal text-muted mt-2">Subtotal: {{item.product.price * item.quantity | currency:'INR'}}</p>
+                            <p class="fs-6 fw-normal text-muted mt-2">Subtotal: {{item.product.price * item.quantity | currency:'INR'}}</p>
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
           <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-solid fa-warning text-warning"></i> Remove item</h5>
         </div>
         <div class="modal-body">
-          Are you sure! you want to clear cart?
+          Are you sure, you want to clear cart?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ToastService } from '../../services/toast.service';
-import { Toast } from '../../Interface/toastInterface';
+import { ToastService } from '../../common/services/toast.service';
+import { Toast } from '../../common/interfaces/toast.types';
 declare var bootstrap: any;
 @Component({
   selector: 'app-toast',
@@ -9,10 +9,12 @@ declare var bootstrap: any;
 })
 
 export class ToastComponent {
+  public message: string = "";
+  @ViewChild('successToast') private successToastEl!: ElementRef;
+  @ViewChild('errorToast') private errorToastEl!: ElementRef;
+
   constructor(private toastService: ToastService) {}
-  @ViewChild('successToast') successToastEl!: ElementRef;
-  @ViewChild('errorToast') errorToastEl!: ElementRef;
-  message: string = "";
+  
   ngOnInit() {
     this.toastService.showToast().subscribe((data:Toast) => {
       this.message = data.message;

@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { UserInterface } from '../Interface/userInterface';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import { UserInterface } from '../interfaces/user.types';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuardService implements CanActivate{
-  userlist:UserInterface[] = [];
-  username:string = "";
-  constructor(private userService:UserService,private authService:AuthService,private router:Router) {
+  public userlist:UserInterface[] = [];
+  public username:string = "";
+  constructor(private userService:UserService,private router:Router) {
   }
 
   ngOnInit(){

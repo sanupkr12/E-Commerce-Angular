@@ -1,31 +1,31 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { cartInterface } from '../../Interface/cartInterface';
-import { product as Product } from '../../Interface/productInterface';
-import { ProductService } from '../../services/product.service';
-import { ToastService } from '../../services/toast.service';
+import { CartService } from '../../common/services/cart.service';
+import { cartInterface } from '../../common/interfaces/cart.types';
+import { ProductInterface } from '../../common/interfaces/product.types';
+import { ProductService } from '../../common/services/product.service';
+import { ToastService } from '../../common/services/toast.service';
 declare var bootstrap :any;
-// import {Toast,Modal} from "bootstrap";
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent {
-  sku_id:string="";
-  product:Product = {} as Product;
-  display_image:string="";
-  cart:cartInterface[] = [];
-  quantity:number = 0;
-  success_message:string = "";
-  error_message:string = "";
-  removeModal:any;
+  public sku_id:string="";
+  public product:ProductInterface = {} as ProductInterface;
+  public display_image:string="";
+  public cart:cartInterface[] = [];
+  public quantity:number = 0;
+  public success_message:string = "";
+  public error_message:string = "";
+  public removeModal:any;
+
+  @ViewChild('removeModal') private removeModalEl!:ElementRef;
+
   constructor(private router:ActivatedRoute,private navigationRouter:Router,private productService:ProductService,private cartService:CartService,private toastService:ToastService){
 
   }
-
-  @ViewChild('removeModal') removeModalEl!:ElementRef;
 
   ngOnInit(){
 
@@ -42,7 +42,7 @@ export class ProductDetailsComponent {
     })
     this.productService.getProducts().subscribe((products:any)=>{
       let isValidSku = false;
-        products['products'].map((item:Product)=>{
+        products['products'].map((item:ProductInterface)=>{
           if(item.sku_id === this.sku_id){
             this.product = item;
             isValidSku = true;
@@ -74,18 +74,6 @@ export class ProductDetailsComponent {
     this.quantity = 1;
     this.cartService.addToCart(sku_id);
     this.handleSucessToast("Product added successfully");
-    // this.quantity = 1;
-    // // let isPresent = false;
-    // // for(let i=0;i<this.cart.length;i++){
-    // //   if(this.cart[i].product.sku_id===sku_id){
-    // //     this.cart[i].quantity = this.quantity;
-    // //     this.cartService.setCart([...this.cart]);
-    // //     isPresent = true;
-    // //     break;
-    // //   }
-    // // }
-    // // if(!isPresent){
-    // }
   }
 
   increaseQuantity(sku_id:string){
@@ -132,15 +120,6 @@ export class ProductDetailsComponent {
     this.removeModal?.hide();
     this.handleSucessToast("Item removed successfully");
     this.cartService.removeItem(this.sku_id);
-    // this.cartService.decreaseQuantity(this.sku_id);
-    // for(let i=0;i<this.cart.length;i++){
-    //   if(this.cart[i].product.sku_id===this.sku_id){
-    //     if(this.cart[i].quantity<=0){
-    //       delete this.cart[i];
-    //     }
-    //   }
-    // }
-    // this.cartService.setCart([...this.cart]); 
   }
 
   updateQuantity(sku_id:string,event:any){

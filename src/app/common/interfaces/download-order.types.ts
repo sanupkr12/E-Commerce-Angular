@@ -1,4 +1,4 @@
-export interface downloadOrder{
+export interface DownloadOrderInterface{
     sku_id:string,
     quantity:number,
     title:string,

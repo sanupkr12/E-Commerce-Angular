@@ -1,11 +1,11 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { product } from '../../Interface/productInterface';
-import { CartService } from '../../services/cart.service';
-import { cartInterface } from '../../Interface/cartInterface';
+import { ProductService } from '../../common/services/product.service';
+import { ProductInterface } from '../../common/interfaces/product.types';
+import { CartService } from '../../common/services/cart.service';
+import { cartInterface } from '../../common/interfaces/cart.types';
 import { ActivatedRoute } from '@angular/router';
-import { priceInterface } from '../../Interface/priceInterface';
-import { ToastService } from '../../services/toast.service';
+import { priceInterface } from '../../common/interfaces/price.types.';
+import { ToastService } from '../../common/services/toast.service';
 declare var bootstrap:any;
 // import { Toast } from "bootstrap";
 @Component({
@@ -14,26 +14,27 @@ declare var bootstrap:any;
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-  products:product[] = [];
-  cartItems:cartInterface[] = [];
-  searchProducts:product[] = [];
-  search:boolean = false;
-  brands:string[]=[];
-  success_message:string = "";
-  error_message:string = "";
-  private _to_delete_sku:string="";
-  to_delete_title:string="";
-  removeModal:any;
-  filter = {
+  public products:ProductInterface[] = [];
+  public cartItems:cartInterface[] = [];
+  public searchProducts:ProductInterface[] = [];
+  public search:boolean = false;
+  public brands:string[]=[];
+  public success_message:string = "";
+  public error_message:string = "";
+  public to_delete_title:string="";
+  public removeModal:any;
+  public filter = {
     minPrice:0,
     maxPrice:1000000,
     rating:0,
     brands:[] as string[]
   }
+  private _to_delete_sku:string="";
+  @ViewChild('removeModal') private removeModalEl!:ElementRef;
   constructor(private productService: ProductService,private cartService:CartService,private router:ActivatedRoute,private toastService:ToastService){
 
   }
-  @ViewChild('removeModal') removeModalEl!:ElementRef;
+  
   ngOnInit(){
     this.products = this.cartService.productList;
     this.productService.getProducts().subscribe((products:any)=>{
@@ -59,7 +60,6 @@ export class ProductsComponent {
         this.search = false;
       }
     });
-    this.brands = this.productService.brands;
     this.cartService.initializeCart();
     this.cartService.validateCart();
     this.cartService.getCart().subscribe((res)=>{
@@ -73,12 +73,12 @@ export class ProductsComponent {
     this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);
   }
 
-  addSearchFilter(products:product[],query:string){
+  addSearchFilter(products:ProductInterface[],query:string){
     if(query.length===0){
       return products;
     }
     query = query.toLowerCase();
-    let resultProducts:product[] = [];
+    let resultProducts:ProductInterface[] = [];
     for(let i=0;i<products.length;i++){
       if(products[i].title.toLowerCase().includes(query) || products[i].description.toLowerCase().includes(query) || products[i].brand.toLowerCase().includes(query))
       {
@@ -189,15 +189,15 @@ export class ProductsComponent {
     }
   }
 
-  sortphtl(a:product,b:product){
+  sortphtl(a:ProductInterface,b:ProductInterface){
     return a.price < b.price ? 1 : -1;
   }
 
-  sortplth(a:product,b:product){
+  sortplth(a:ProductInterface,b:ProductInterface){
     return a.price > b.price ? 1 : -1;
   }
 
-  sortrhtl(a:product,b:product){
+  sortrhtl(a:ProductInterface,b:ProductInterface){
     return a.rating < b.rating ? 1 : -1;
   }
 

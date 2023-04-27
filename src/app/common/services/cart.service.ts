@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { UserInterface } from '../Interface/userInterface';
+import { UserInterface } from '../interfaces/user.types';
 import { ProductService } from './product.service';
 import { UserService } from './user.service';
-import {product as ProductInterface} from "../Interface/productInterface";
-import { cartInterface as CartInterface } from '../Interface/cartInterface';
+import { ProductInterface} from "../interfaces/product.types";
+import { cartInterface as CartInterface } from '../interfaces/cart.types';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { priceInterface } from '../Interface/priceInterface';
+import { priceInterface } from '../interfaces/price.types.';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+  public userList:UserInterface[] = [];
+  public productList:ProductInterface[] = [];
+  public cartList:CartInterface[] = [];
   private _cartItems = new BehaviorSubject<CartInterface[]>([]);
-  userList:UserInterface[] = [];
-  productList:ProductInterface[] = [];
-  cartList:CartInterface[] = [];
 
-  constructor(private authService:AuthService,private userService:UserService,private productService:ProductService) { }
+  constructor(private userService:UserService,private productService:ProductService) { }
   ngOnInit(){
     this.productService.getProducts().subscribe((data:any)=>{
       this.productList = data.products;
@@ -209,6 +209,7 @@ export class CartService {
       }
     }
   }
+
   clearCart(){
     const email = localStorage.getItem('email');
     let cart = JSON.parse(localStorage.getItem('cart') || '');
@@ -289,10 +290,8 @@ export class CartService {
       this.setCart([...this.cartList]);
     }
     else{
-      console.log(isPresent);
       this.setCart([...this.cartList]);
     }
-    
   }
 
   initializeCart(){
@@ -343,7 +342,6 @@ export class CartService {
             }
           }
           if(!isValidUser){
-            console.log(isValidUser);
             localStorage.removeItem('email');
           }
         }
@@ -383,7 +381,6 @@ export class CartService {
           localStorage.setItem('cart',JSON.stringify({'untracked':{}}));
         }
         else{
-          //do something with untracked items
           let res:CartInterface[] = [];
           for(let key in cart['untracked']){
             let quantity:number = cart['untracked'][key];
@@ -395,7 +392,6 @@ export class CartService {
             }
           }
           this.setCart(res);
-          
         }
       }
       else{
@@ -403,8 +399,6 @@ export class CartService {
           localStorage.setItem('cart',JSON.stringify({[email]:{},'untracked':{}}))
         }
         else{
-          //do somthing with currently logged in user
-          console.log(email);
           if(!(email in cart)){
             let res:CartInterface[]= [];
             for(let key in cart['untracked']){
@@ -430,7 +424,6 @@ export class CartService {
                 }
               }
             }
-            console.log(res);
             this.setCart([...res]);
           }
         }
@@ -447,7 +440,6 @@ export class CartService {
     }catch(err){
       sessionStorage.setItem('filter',JSON.stringify({minPrice:0,maxPrice:10000000,rating:0,brands:[]}));
     }
-    
   }
 
   getFilter(){
@@ -465,15 +457,3 @@ export class CartService {
     }
   }
 }
-
-//cart structure in local storage
-// cart:{
-//   "email1":{"item sku":1,"item sku2":2},
-//   "email2":{"item sku":4,"item sku2":5},
-//   "untracked Items":{"item sku1":2,"item sku2":5}
-// }
-
-//Session Storage structure
-//filter:{minPrice:0,maxPrice:1000000},
-//        rating:number,
-//        brand:string[]}

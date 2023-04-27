@@ -41,6 +41,14 @@ input:focus{
     cursor: pointer;
 }
 
+.hover-underline{
+    text-decoration:none;
+}
+
+.hover-underline:hover{
+    text-decoration:underline;
+}
+
 .w-80{
     width:80%;
 }

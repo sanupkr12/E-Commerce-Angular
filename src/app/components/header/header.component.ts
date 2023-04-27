@@ -1,28 +1,32 @@
 import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { Input } from '@angular/core';
-import {Router} from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { cartInterface } from '../../Interface/cartInterface';
-import { UserInterface } from '../../Interface/userInterface';
-import { UserService } from '../../services/user.service';
-import { CartService } from '../../services/cart.service';
-import { ProductService } from '../../services/product.service';
-import { product } from '../../Interface/productInterface';
+import {ActivatedRoute, Router} from '@angular/router';
+import { AuthService } from '../../common/services/auth.service';
+import { cartInterface } from '../../common/interfaces/cart.types';
+import { UserInterface } from '../../common/interfaces/user.types';
+import { UserService } from '../../common/services/user.service';
+import { CartService } from '../../common/services/cart.service';
+import { ProductService } from '../../common/services/product.service';
+import { ProductInterface } from '../../common/interfaces/product.types';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  username:string = "";
-  userlist:UserInterface[] = [];
-  cartItems:cartInterface[] = [];
-  totalItems:number = 0;
-  @ViewChild('searchInput',{static:false}) searchInputRef!:ElementRef;
-  constructor(private authService:AuthService,private userService:UserService,private cartService:CartService,private router:Router){
+  public username:string = "";
+  public userlist:UserInterface[] = [];
+  public cartItems:cartInterface[] = [];
+  public totalItems:number = 0;
+  @ViewChild('searchInput',{static:false}) private searchInputRef!:ElementRef;
+  
+  constructor(private routerParam:ActivatedRoute,private authService:AuthService,private userService:UserService,private cartService:CartService,private router:Router){
   }
 
   ngOnInit(){
+    this.routerParam.queryParams.subscribe((params)=>{
+      console.log(params);
+    })
     let email = localStorage.getItem('email');
     if(!email){
       this.username = "";

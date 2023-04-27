@@ -1,28 +1,28 @@
 import { Component,ElementRef,ViewChild } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { ProductService } from '../../services/product.service';
-import { product as ProductInterface } from '../../Interface/productInterface';
-import { cartInterface as CartInterface } from '../../Interface/cartInterface';
-import { ToastService } from '../../services/toast.service';
-import { Papa } from 'ngx-papaparse';
+import { CartService } from '../../common/services/cart.service';
+import { cartInterface as CartInterface } from '../../common/interfaces/cart.types';
+import { ToastService } from '../../common/services/toast.service';
+import { Papa as papaParse } from 'ngx-papaparse';
 declare var bootstrap: any;
-declare var $:any;
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
-  cartItems:CartInterface[]=[];
-  totalMrp:number = 0;
-  error_message:string = "";
-  success_message:string = "";
+  public cartItems:CartInterface[]=[];
+  public totalMrp:number = 0;
+  public error_message:string = "";
+  public success_message:string = "";
+  public to_delete_title:string = "";
+  public placedOrder:boolean = false;
+  public removeModal:any;
   private _to_delete_sku:string = "";
-  to_delete_title:string = "";
-  placedOrder:boolean = false;
-  removeModal:any;
-  @ViewChild('removeModal') removeModalEl!:ElementRef;
-  constructor(private cartService:CartService,private productService:ProductService,private toastService:ToastService,private papa:Papa){
+
+  @ViewChild('removeModal') private removeModalEl!:ElementRef;
+
+  constructor(private cartService:CartService,private toastService:ToastService,private papa:papaParse){
   }
 
   ngOnInit(){
@@ -32,9 +32,9 @@ export class CartComponent {
     this.cartService.getCart().subscribe((res)=>{
       this.cartItems = [...res];
       this.updateMrp();
-    })
-    
+    }) 
   }
+
   ngAfterViewInit(){
     // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     //     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -42,7 +42,6 @@ export class CartComponent {
     // }) 
     this.removeModal = new bootstrap.Modal(this.removeModalEl.nativeElement);
   }
-
 
   increaseQuantity(sku_id:string){
     this.cartService.increaseQuantity(sku_id);
@@ -80,7 +79,6 @@ export class CartComponent {
       this.handleErrorToast("Not a valid number");
       return;
     }
-    
     if(parseInt(event.target.value)<=0){
       if(parseInt(event.target.value)===0)
       {
@@ -90,7 +88,7 @@ export class CartComponent {
       this.handleErrorToast("Invalid quantity");
       return;
     }
-
+    this.handleSuccessToast("Quantity updated successfully");
     this.cartService.updateQuantity(sku_id,parseInt(event.target.value));
   }
 
@@ -147,12 +145,6 @@ export class CartComponent {
       order.push(fields);
     }
     let data = this.papa.unparse(order, config);
-    // let order:downloadOrder[] = [];
-    // for(let i=0;i<this.orders.length;i++){
-    //   let fields:downloadOrder = {sku_id:this.orders[i].product.sku_id,quantity:this.orders[i].quantity,title:this.orders[i].product.title,price:this.orders[i].product.price};
-    //   order.push(fields);
-    // }
-    // let data = this.papa.unparse(order, config);
     let blob = new Blob([data], {type: 'text/tsv;charset=utf-8'});
     let fileUrl = null;
     if (navigator.msSaveBlob) {

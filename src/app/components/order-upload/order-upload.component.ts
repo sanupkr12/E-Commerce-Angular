@@ -1,16 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { Papa,ParseResult } from 'ngx-papaparse';
+import { CartService } from '../../common/services/cart.service';
+import { Papa as papaParse,ParseResult } from 'ngx-papaparse';
 import { Observable } from 'rxjs';
-import { orderData } from '../../Interface/orderData';
-import { cartInterface } from '../../Interface/cartInterface';
-import { product } from '../../Interface/productInterface';
-import { ProductService } from '../../services/product.service';
+import { OrderDataInterface } from '../../common/interfaces/order-data.types';
+import { cartInterface } from '../../common/interfaces/cart.types';
+import { ProductInterface } from '../../common/interfaces/product.types';
+import { ProductService } from '../../common/services/product.service';
 // import { Toast } from 'bootstrap';
-import { errorOrder } from '../../Interface/errorOrderInterface';
-import { downloadOrder } from '../../Interface/downloadOrderInterface';
+import { ErrorOrderInterface } from '../../common/interfaces/error-order.types';
+import { DownloadOrderInterface } from '../../common/interfaces/download-order.types';
 import { ArrayData } from 'ngx-papaparse/lib/interfaces/unparse-data';
-import { ToastService } from 'src/app/services/toast.service';
+import { ToastService } from 'src/app/common/services/toast.service';
 declare global {
   interface Navigator {
       msSaveBlob?: (blob: any, defaultName?: string) => string
@@ -22,28 +22,23 @@ declare global {
   styleUrls: ['./order-upload.component.scss']
 })
 export class OrderUploadComponent {
-  orders:cartInterface[]=[];
-  cartItems:cartInterface[]=[];
-  previewItems:boolean = false;
-  productList:product[] = [];
-  error_message:string = "";
-  success_message:string = "";
-  fileResult:any;
-  errorList:errorOrder[] = [];
-  errorPreview:boolean = false;
-  constructor(private cartService:CartService,private papa:Papa,private productService:ProductService,private toastService:ToastService){
+  public orders:cartInterface[]=[];
+  public cartItems:cartInterface[]=[];
+  public previewItems:boolean = false;
+  public productList:ProductInterface[] = [];
+  public error_message:string = "";
+  public success_message:string = "";
+  public fileResult:any;
+  public errorList:ErrorOrderInterface[] = [];
+  public errorPreview:boolean = false;
+
+  @ViewChild('orderFile',{static:true}) private orderFileEl!:ElementRef;
+
+  constructor(private cartService:CartService,private papa:papaParse,private productService:ProductService,private toastService:ToastService){
 
   }
 
-  @ViewChild('successToast',{static:true}) successToastEl!:ElementRef<HTMLDivElement>;
-  @ViewChild('errorToast',{static:true}) errorToastEl!:ElementRef<HTMLDivElement>;
-  @ViewChild('orderFile',{static:true}) orderFileEl!:ElementRef;
-  // successToast:Toast | null = null;
-  // errorToast:Toast | null = null;
-
   ngOnInit(){
-    // this.successToast = new Toast(this.successToastEl.nativeElement,{});
-    // this.errorToast = new Toast(this.errorToastEl.nativeElement,{});
     this.cartService.initializeCart();
     this.cartService.validateCart();
     this.productService.getProducts().subscribe((data:any)=>{
@@ -219,12 +214,25 @@ export class OrderUploadComponent {
     for(let i=0;i<this.orders.length;i++){
       if(this.orders[i].product.sku_id===sku_id){
         if(event.target.value.isNan() || parseInt(event.target.value)<=0){
+          if(event.target.value.isNan())
+          {
+            event.target.value = this.orders[i].quantity;
+            this.handleErrorToast("Invalid quantity");
+            return;
+          }
+          else if(event.target.value===0){
+            this.orders = this.orders.filter((order)=>order.product.sku_id!=sku_id);
+            return;
+          }
           this.handleErrorToast("Invalid quantity");
+          event.target.value = this.orders[i].quantity;
           return;
         }
         else{
           if(parseInt(event.target.value)>0){
             this.orders[i].quantity = parseInt(event.target.value);
+            this.handleSucessToast("Quantity updated successfully");
+            return;
           }
         }
       }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { UserInterface } from '../Interface/userInterface';
+import { BehaviorSubject, Observable} from 'rxjs';
+import { UserInterface } from '../interfaces/user.types';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userList:UserInterface[] = [];
+  public userList:UserInterface[] = [];
   private _user = new BehaviorSubject<string>("");
 
   constructor(private userService:UserService){
@@ -26,7 +26,6 @@ export class AuthService {
 
   getUser():Observable<any>{
     return this._user.asObservable();
-
   }
 
   isValidUser(email:string){

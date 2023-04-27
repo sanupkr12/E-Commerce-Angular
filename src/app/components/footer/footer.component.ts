@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  currDate:Date = new Date();
+  public currDate:Date = new Date();
 
   ngOnInit(){
     setInterval(()=>{this.updateDate()},1000);

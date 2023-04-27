@@ -33,11 +33,11 @@
                             <div class="ms-sm-3 ms-md-4 ms-lg-4">
                                 <a class="btn btn-primary fs-6 fw-light" routerLink="login" *ngIf="username.length === 0">Login</a>
                                 <div class="dropdown" *ngIf="username.length > 0">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn border-0 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-solid fa-user pe-1"></i> {{username}}
                                       </button>
-                                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                        <li><button class="dropdown-item" (click)="handleLogout()">Logout</button></li>
+                                      <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm rounded" aria-labelledby="dropdownMenuButton1">
+                                        <li><button class="dropdown-item text-primary bg-white" (click)="handleLogout()">Logout</button></li>
                                       </ul>
                                 </div>
                             </div>
